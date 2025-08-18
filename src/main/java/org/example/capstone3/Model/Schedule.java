@@ -5,8 +5,6 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
 
 import java.time.LocalDate;
 
