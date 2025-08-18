@@ -38,5 +38,5 @@ public class PlanController {
         planService.assignPatientToPlan(planId, patientId);
         return ResponseEntity.status(200).body(new ApiResponse("Successfully assigned plan to patient"));
     }
-    
+
 }
