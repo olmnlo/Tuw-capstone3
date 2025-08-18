@@ -15,15 +15,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/api/v1/patient")
 @RequiredArgsConstructor
 public class PatientController {
 
     private final PatientService patientService;
-
     //Hussam
     @GetMapping
     public ResponseEntity<List<Patient>> getAllPatients(){
@@ -38,7 +35,6 @@ public class PatientController {
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("patient added successfully"));
     }
 
-
     @PutMapping("/{patient_id}")
     public ResponseEntity<ApiResponse> updatePatient(@PathVariable Integer patient_id,@Valid@RequestBody PatientDTO patientDTO){
         patientService.updatePatient(patient_id, patientDTO);
@@ -50,6 +46,5 @@ public class PatientController {
         patientService.deletePatient(patient_id);
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("patient deleted successfully"));
     }
-
-
+  
 }

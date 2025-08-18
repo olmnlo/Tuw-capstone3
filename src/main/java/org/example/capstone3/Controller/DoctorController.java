@@ -16,7 +16,7 @@ public class DoctorController {
 
     @GetMapping
     public ResponseEntity<?> getAllDoctors(){
-        return ResponseEntity.status(200).body(doctorService.findAllDoctor());
+        return ResponseEntity.status(200).body(doctorService.findAllDoctors());
     }
 
 

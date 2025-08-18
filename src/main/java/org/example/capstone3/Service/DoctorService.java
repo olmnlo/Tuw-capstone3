@@ -15,7 +15,7 @@ import java.util.List;
 public class DoctorService {
     private final DoctorRepository doctorRepository;
 
-    public List<Doctor> findAllDoctor(){
+    public List<Doctor> findAllDoctors(){
         List<Doctor> doctors = doctorRepository.findAll();
         if (doctors.isEmpty()){
             throw new ApiException("no doctor found !");
@@ -52,6 +52,13 @@ public class DoctorService {
 
         doctorRepository.delete(doctor);
     }
+
+    // assign method for schedule (object inputs or variables) look at the model to know the parameters
+
+    // assign method for booking (object inputs or variables) look at the model to know the parameters
+
+    // assign method for report (object inputs or variables) look at the model to know the parameters
+
 
 
 
