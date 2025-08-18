@@ -15,6 +15,5 @@ public class Schedule {
     private LocalDate date;
 
     @ManyToOne
-
     private Doctor doctor;
 }
