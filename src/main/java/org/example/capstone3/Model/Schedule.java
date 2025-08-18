@@ -2,20 +2,19 @@ package org.example.capstone3.Model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+
 import java.time.LocalDate;
 
 
+@NoArgsConstructor
 @Entity
-@RequiredArgsConstructor
+@Getter
+@Setter
 @AllArgsConstructor
 //Aziz
 public class Schedule {
@@ -31,4 +30,5 @@ public class Schedule {
     @ManyToOne
     @JsonIgnore
     private Doctor doctor;
+
 }

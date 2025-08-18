@@ -4,12 +4,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 
+@NoArgsConstructor
 @Entity
-@RequiredArgsConstructor
+@Getter
+@Setter
 @AllArgsConstructor
 //Aziz
 public class Report {
@@ -22,12 +23,11 @@ public class Report {
     @Column(columnDefinition = "varchar(500) not null")
     private String description;
 
-    @ManyToOne
-    @JsonIgnore
+    @OneToOne
+    @MapsId
     private Patient patient;
 
     @ManyToOne
-    @JsonIgnore
     private Doctor doctor;
 
 
