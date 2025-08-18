@@ -17,13 +17,14 @@ import java.util.List;
 
 import java.util.List;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/patient")
 @RequiredArgsConstructor
 public class PatientController {
 
     private final PatientService patientService;
-
     //Hussam
     @GetMapping
     public ResponseEntity<List<Patient>> getAllPatients(){
@@ -37,7 +38,5 @@ public class PatientController {
         patientService.addPatient(patientDTO);
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("patient added successfully"));
     }
-
-
 
 }
