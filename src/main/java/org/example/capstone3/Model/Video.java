@@ -16,9 +16,14 @@ public class Video {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer Id;
 
-    private String link;
+    private String fileName;
+    private String contentType;
+
+    @Lob
+    @Column(columnDefinition = "LONGBLOB")
+    private byte[] data;
 
     @ManyToOne
     @JsonIgnore
