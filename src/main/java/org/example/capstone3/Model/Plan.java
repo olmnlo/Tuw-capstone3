@@ -1,26 +1,40 @@
 package org.example.capstone3.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Set;
+
+@NoArgsConstructor
+@Entity
 @Getter
 @Setter
-
 @AllArgsConstructor
 public class Plan {
 
+    @Id
     private Integer id;
 
     private String name;
 
     private String description;
 
+    @OneToOne
+    @JsonIgnore
+    @MapsId
+    private Patient patient;
+
     @ManyToOne
     @JsonIgnore
-    private Patient patient;
+    private Doctor doctor;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "plan")
+    @JsonIgnore
+    private Set<Video> video;
 
 
 }
