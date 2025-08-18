@@ -1,8 +1,8 @@
 package org.example.capstone3.Model;
 
-public class User {
+public class Patient {
 
-    public String id;
+    private Integer id;
     private Integer name;
 
 
