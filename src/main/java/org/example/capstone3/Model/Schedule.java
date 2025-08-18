@@ -10,9 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import java.time.LocalDate;
 
-@Getter
-@Setter
-@AllArgsConstructor
+
 public class Schedule {
 
     private Integer id;
@@ -20,5 +18,6 @@ public class Schedule {
     private LocalDate date;
 
     @ManyToOne
+
     private Doctor doctor;
 }
