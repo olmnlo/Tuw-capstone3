@@ -48,7 +48,6 @@ public class Booking {
     private Patient patient;
 
     @ManyToOne
-    @MapsId
     private Doctor doctor;
 
 }

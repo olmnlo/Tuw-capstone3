@@ -39,5 +39,17 @@ public class PatientController {
     }
 
 
+    @PutMapping("/{patient_id}")
+    public ResponseEntity<ApiResponse> updatePatient(@PathVariable Integer patient_id,@Valid@RequestBody PatientDTO patientDTO){
+        patientService.updatePatient(patient_id, patientDTO);
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("patient updated successfully"));
+    }
+
+    @DeleteMapping("/{patient_id}")
+    public ResponseEntity<ApiResponse> deletePatient(@PathVariable Integer patient_id){
+        patientService.deletePatient(patient_id);
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("patient deleted successfully"));
+    }
+
 
 }
