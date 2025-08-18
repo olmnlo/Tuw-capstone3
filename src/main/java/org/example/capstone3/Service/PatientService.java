@@ -30,7 +30,27 @@ public class PatientService {
     }
 
     //Hussam
-    public void updatePatient(Integer patient_id, Patient patient){
+    public void updatePatient(Integer patient_id, PatientDTO patient){
+        Patient oldPatient = patientRepository.findPatientById(patient_id);
+        if (oldPatient == null){
+            throw new ApiException("patient not found");
+        }
+        oldPatient.setAge(patient.getAge());
+        oldPatient.setName(patient.getName());
+        oldPatient.setPassword(patient.getPassword());
+        oldPatient.setUsername(patient.getUsername());
+        oldPatient.setBooking(null);
+        oldPatient.setPlan(null);
+        oldPatient.setQuestion(null);
 
+        patientRepository.save(oldPatient);
+    }
+
+    public void deletePatient(Integer patient_id) {
+        Patient oldPatient = patientRepository.findPatientById(patient_id);
+        if (oldPatient == null) {
+            throw new ApiException("patient not found");
+        }
+        patientRepository.delete(oldPatient);
     }
 }
