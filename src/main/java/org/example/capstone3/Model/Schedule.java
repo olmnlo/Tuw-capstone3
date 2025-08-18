@@ -5,8 +5,6 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
