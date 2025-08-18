@@ -4,29 +4,17 @@ package org.example.capstone3.Model;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import java.util.Set;
-
-@Setter
-@Getter
-@AllArgsConstructor
-@NoArgsConstructor
-@Entity
-
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
 
 @Getter
 @Setter
 @AllArgsConstructor
 //Hussam
-
 public class Patient {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private String username;
