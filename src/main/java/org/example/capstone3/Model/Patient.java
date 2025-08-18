@@ -1,8 +1,12 @@
 package org.example.capstone3.Model;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.PrimaryKeyJoinColumn;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+@AllArgsConstructor
 //Hussam
 public class Patient {
 

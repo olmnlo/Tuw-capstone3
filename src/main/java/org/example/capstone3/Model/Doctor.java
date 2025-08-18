@@ -33,7 +33,5 @@ public class Doctor {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "doctor")
     private Set<Schedule> schedule;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private Profile profile;
 
 }
