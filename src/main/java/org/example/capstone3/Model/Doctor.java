@@ -8,36 +8,18 @@ import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-
 import lombok.Setter;
 
 import java.util.Set;
-
-@Setter
-@Getter
-@AllArgsConstructor
 @NoArgsConstructor
 @Entity
-
 @Getter
 @Setter
 @AllArgsConstructor
-@Data
 //Hussam
  
 public class Doctor {
-    @Id
-    private Integer id;
-
-
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "doctor")
-    private Set<Booking> booking;
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,8 +36,11 @@ public class Doctor {
     private Character sex;
     private String bio;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "doctor")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "id")
     private Set<Schedule> schedule;
+
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "doctor")
+    private Set<Booking> booking;
 
 
 }
