@@ -25,6 +25,7 @@ public class Patient {
     private Integer age;
     private Character sex;
     private String bio;
+    private Integer isj;
 
 
 
