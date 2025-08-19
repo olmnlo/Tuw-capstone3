@@ -23,8 +23,7 @@ public class Report {
     @Column(columnDefinition = "varchar(500) not null")
     private String description;
 
-    @OneToOne
-    @MapsId
+    @ManyToOne
     private Patient patient;
 
     @ManyToOne

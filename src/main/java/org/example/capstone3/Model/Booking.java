@@ -42,9 +42,8 @@ public class Booking {
     private String status = "waiting";
 
 
-    @OneToOne
+    @ManyToOne
     @JsonIgnore
-    @MapsId
     private Patient patient;
 
     @ManyToOne
