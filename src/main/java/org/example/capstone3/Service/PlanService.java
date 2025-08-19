@@ -26,23 +26,49 @@ public class PlanService {
     }
 
     //Hussam: fixing
-    public void addPlan(Integer patientId,Integer doctor_id ,PlanDTO planDTO) {
+//    public void addPlan(Integer patientId,Integer doctor_id ,PlanDTO planDTO) {
+//        Patient patient = patientRepository.findPatientById(patientId);
+//        if (patient == null) {
+//            throw new ApiException("Patient not found");
+//        }
+//        Doctor doctor = doctorRepository.findDoctorById(doctor_id);
+//        if (doctor == null){
+//            throw new ApiException("doctor not found");
+//        }
+//
+//        if (planRepository.existsPlanByDoctor_IdAndPatient_Id(doctor_id, patientId)){
+//            throw new ApiException("patient has plan");
+//        }
+//
+//        Plan plan = new Plan(null, planDTO.getName(),planDTO.getDescription(),patient, doctor, new ArrayList<>());
+//        planRepository.save(plan);
+//
+//    }
+    public void addPlan(Integer patientId, Integer doctorId, PlanDTO planDTO) {
         Patient patient = patientRepository.findPatientById(patientId);
         if (patient == null) {
             throw new ApiException("Patient not found");
         }
-        Doctor doctor = doctorRepository.findDoctorById(doctor_id);
-        if (doctor == null){
-            throw new ApiException("doctor not found");
+        Doctor doctor = doctorRepository.findDoctorById(doctorId);
+        if (doctor == null) {
+            throw new ApiException("Doctor not found");
         }
 
-        if (planRepository.existsPlanByDoctor_IdAndPatient_Id(doctor_id, patientId)){
-            throw new ApiException("patient has plan");
+        // Prevent duplicate plans
+        if (planRepository.existsPlanByDoctor_IdAndPatient_Id(doctorId, patientId)) {
+            throw new ApiException("Patient already has a plan from this doctor");
         }
 
-        Plan plan = new Plan(null, planDTO.getName(),planDTO.getDescription(),patient, doctor, new ArrayList<>());
+        Plan plan = new Plan(
+                null, // Will be set to patientId because of @MapsId
+                planDTO.getName(),
+                planDTO.getDescription(),
+                patient,
+                doctor,
+                new ArrayList<>()
+        );
+
         planRepository.save(plan);
-
     }
 
     public void updatePlan(Integer patientId, Integer planId, PlanDTO planDTO) {
@@ -64,15 +90,32 @@ public class PlanService {
         planRepository.save(oldPlan);
     }
 
-    public void deletePlan(Integer doctorID,Integer planId) {
+//    public void deletePlan(Integer doctorID,Integer planId) {
+//        Plan plan = planRepository.findPlanById(planId);
+//        if (plan == null) {
+//            throw new ApiException("Plan not found");
+//        }
+//        Doctor doctor= doctorRepository.findDoctorById(doctorID);
+//        if(doctor.getId().equals(plan.getDoctor().getId())) {
+//            throw new ApiException("doctor not authorised to change this plan");
+//        }
+//        planRepository.delete(plan);
+//    }
+
+    public void deletePlan(Integer doctorId, Integer planId) {
         Plan plan = planRepository.findPlanById(planId);
         if (plan == null) {
             throw new ApiException("Plan not found");
         }
-        Doctor doctor= doctorRepository.findDoctorById(doctorID);
-        if(doctor.getId().equals(plan.getDoctor().getId())) {
-            throw new ApiException("doctor not authorised to change this plan");
+        Doctor doctor = doctorRepository.findDoctorById(doctorId);
+        if (doctor == null) {
+            throw new ApiException("Doctor not found");
         }
+
+        if (!doctor.getId().equals(plan.getDoctor().getId())) {
+            throw new ApiException("Doctor not authorised to delete this plan");
+        }
+
         planRepository.delete(plan);
     }
 
