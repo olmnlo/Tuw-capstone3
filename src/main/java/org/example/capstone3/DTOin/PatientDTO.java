@@ -1,4 +1,4 @@
-package org.example.capstone3.DTO;
+package org.example.capstone3.DTOin;
 
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.*;

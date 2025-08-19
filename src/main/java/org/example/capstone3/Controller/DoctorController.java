@@ -1,7 +1,9 @@
 package org.example.capstone3.Controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.capstone3.Api.ApiResponse;
+import org.example.capstone3.DTOin.DoctorDTO;
 import org.example.capstone3.Model.Doctor;
 import org.example.capstone3.Service.DoctorService;
 import org.springframework.http.ResponseEntity;
@@ -20,21 +22,23 @@ public class DoctorController {
     }
 
 
+    //Hussam fix: make it DTO doctor
     @PostMapping
-    public ResponseEntity<?> addDoctors(Doctor doctor){
-        doctorService.addDoctor(doctor);
+    public ResponseEntity<ApiResponse> addDoctors(@Valid@RequestBody DoctorDTO doctorDTO){
+        doctorService.addDoctor(doctorDTO);
         return ResponseEntity.status(200).body(new ApiResponse("Doctor added successfully !"));
     }
 
-    @PutMapping
-    public ResponseEntity<?> updateDoctors(Integer id, Doctor doctor){
-        doctorService.updateDoctor(id, doctor);
+    //Hussam fix: make it DTO doctor
+    @PutMapping("/{doctor_id}")
+    public ResponseEntity<ApiResponse> updateDoctors(@PathVariable Integer doctor_id,@Valid@RequestBody  DoctorDTO doctorDTO){
+        doctorService.updateDoctor(doctor_id, doctorDTO);
         return ResponseEntity.status(200).body(new ApiResponse("Doctor updated successfully !"));
     }
 
-    @DeleteMapping
-    public ResponseEntity<?> deleteDoctors(Integer id){
-        doctorService.deleteDoctor(id);
+    @DeleteMapping("/{doctor_id}")
+    public ResponseEntity<ApiResponse> deleteDoctors(@PathVariable Integer doctor_id){
+        doctorService.deleteDoctor(doctor_id);
         return ResponseEntity.status(200).body(new ApiResponse("Doctor deleted successfully !"));
     }
 

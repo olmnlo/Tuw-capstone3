@@ -23,20 +23,22 @@ public class ReportController {
 
 
     @PostMapping
-    public ResponseEntity<?> addReport(Report report){
+    public ResponseEntity<ApiResponse> addReport(Report report){
         reportService.addReport(report);
         return ResponseEntity.status(200).body(new ApiResponse("Report added successfully !"));
     }
 
-    @PutMapping
-    public ResponseEntity<?> updateReport(Integer id, Report report){
-        reportService.updateReport(id, report);
+    //Hussam: fix make path variable
+    @PutMapping("/{report_id}")
+    public ResponseEntity<ApiResponse> updateReport(@PathVariable Integer report_id, Report report){
+        reportService.updateReport(report_id, report);
         return ResponseEntity.status(200).body(new ApiResponse("Report updated successfully !"));
     }
 
-    @DeleteMapping
-    public ResponseEntity<?> deleteReport(Integer id){
-        reportService.deleteReport(id);
+    //Hussam: fix make path variable
+    @DeleteMapping("/{report_id}")
+    public ResponseEntity<ApiResponse> deleteReport(@PathVariable Integer report_id){
+        reportService.deleteReport(report_id);
         return ResponseEntity.status(200).body(new ApiResponse("Report deleted successfully !"));
     }
 
