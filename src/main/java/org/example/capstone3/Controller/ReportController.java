@@ -53,38 +53,35 @@ public class ReportController {
 
     //Mohammed
     @GetMapping(
-            value = "/Patient/{patientId}/Doctor/{doctorId}/Report/{reportId}/pdf",
+            value = "/Patient/{patientId}/Doctor/{doctorId}/pdf",
             produces = MediaType.APPLICATION_PDF_VALUE
     )
     public ResponseEntity<byte[]> generatePdfReport(@PathVariable Integer patientId,
                                                     @PathVariable Integer doctorId,
-                                                    @PathVariable Integer reportId,
                                                     @RequestParam(defaultValue = "attachment") String disp) {
 
-        byte[] pdf = reportService.generatePdfReport(patientId, doctorId, reportId);
+        byte[] pdf = reportService.generatePdfReport(patientId, doctorId);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_PDF);
         headers.setContentDisposition(
-                ContentDisposition.builder(disp).filename("report-" + reportId + ".pdf").build()
+                ContentDisposition.builder(disp).filename("report-" + patientId + ".pdf").build()
         );
 
         return new ResponseEntity<>(pdf, headers, HttpStatus.OK);
   }
 
-
-    // Generate a new report from patient answers
-    @PostMapping("/patient/{patientId}")
-    public ResponseEntity<Report> generateReport(@PathVariable Integer patientId) {
-        Report report = reportService.generateReport(patientId);
-        return ResponseEntity.ok(report);
-    }
-
     // Get all reports for a patient (for physiotherapist view)
-    @GetMapping("/patient/{patientId}")
+    @GetMapping("/patient/{patientId}/reports")
     public ResponseEntity<List<Report>> getReportsByPatient(@PathVariable Integer patientId) {
         List<Report> reports = reportService.getReportsByPatient(patientId);
         return ResponseEntity.ok(reports);
+    }
+
+    @PostMapping("/generate-report-ai/patient/{patient_id}/doctor/{doctor_id}")
+    public ResponseEntity<ApiResponse> generateReportAi(@PathVariable Integer patient_id, @PathVariable Integer doctor_id){
+        reportService.generateReport(patient_id, doctor_id);
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("report generated successfully"));
     }
     
 
