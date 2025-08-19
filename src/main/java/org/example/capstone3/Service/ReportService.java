@@ -23,10 +23,8 @@ import java.util.Map;
 //Aziz
 public class ReportService {
     private final ReportRepository reportRepository;
-
     private final ReportPdfService reportPdfService;
     private final OpenAiConnect openAiConnect;
-
 
 
 
@@ -63,7 +61,6 @@ public class ReportService {
 
         reportRepository.delete(report);
     }
-
 
 
     //Mohammed
