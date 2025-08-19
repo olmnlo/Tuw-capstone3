@@ -2,6 +2,7 @@ package org.example.capstone3.Service;
 
 import lombok.RequiredArgsConstructor;
 import org.example.capstone3.Api.ApiException;
+import org.example.capstone3.DTOin.DoctorDTO;
 import org.example.capstone3.Model.Doctor;
 import org.example.capstone3.Repository.DoctorRepository;
 import org.example.capstone3.Repository.PatientRepository;
@@ -24,21 +25,23 @@ public class DoctorService {
     }
 
 
-    public void addDoctor(Doctor doctor){
+    public void addDoctor(DoctorDTO doctorDTO){
+        Doctor doctor = new Doctor(null, doctorDTO.getUsername(),doctorDTO.getPassword(),doctorDTO.getName(),doctorDTO.getAge(),doctorDTO.getSex(),null,null,null);
         doctorRepository.save(doctor);
     }
 
-    public void updateDoctor(Integer id, Doctor doctor){
+    public void updateDoctor(Integer id, DoctorDTO doctorDTO){
         Doctor oldDoctor = doctorRepository.findDoctorById(id);
 
         if (oldDoctor == null){
             throw new ApiException("no doctor found !");
         }
 
-        oldDoctor.setAge(doctor.getAge());
-        oldDoctor.setName(doctor.getName());
-        oldDoctor.setPassword(doctor.getPassword());
-        oldDoctor.setUsername(doctor.getUsername());
+        oldDoctor.setAge(doctorDTO.getAge());
+        oldDoctor.setName(doctorDTO.getName());
+        oldDoctor.setPassword(doctorDTO.getPassword());
+        oldDoctor.setUsername(doctorDTO.getUsername());
+        oldDoctor.setSex(doctorDTO.getSex());
 
         doctorRepository.save(oldDoctor);
     }

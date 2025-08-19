@@ -1,5 +1,6 @@
 package org.example.capstone3.Advice;
 
+import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.UnexpectedTypeException;
 import org.example.capstone3.Api.ApiException;
 import org.example.capstone3.Api.ApiResponse;
@@ -70,5 +71,10 @@ public class ControllerAdvice {
     @ExceptionHandler(value = NullPointerException.class)
     public ResponseEntity<ApiResponse> NullPointerException (NullPointerException nullPointerException){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse(nullPointerException.getMessage()));
+    }
+
+    @ExceptionHandler(value = ConstraintViolationException.class)
+    public ResponseEntity<ApiResponse> ConstraintViolationException (ConstraintViolationException constraintViolationException){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse(constraintViolationException.getMessage()));
     }
 }

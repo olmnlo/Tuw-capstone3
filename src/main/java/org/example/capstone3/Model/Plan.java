@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.Set;
 
 @NoArgsConstructor
@@ -34,7 +35,7 @@ public class Plan {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "plan")
     @JsonIgnore
-    private Set<Video> video;
+    private List<Video> video;
 
 
 }

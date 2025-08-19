@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 import java.util.Set;
 
 @NoArgsConstructor
@@ -39,18 +41,18 @@ public class Patient {
     private String sex;
 
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "patient")
-    private Booking booking;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "patient")
+    private List<Booking> booking;
 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "patient")
     private Plan plan;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "patient")
-    private Report report;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "patient")
+    private List<Report> report;
 
 
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "patient")
-    private Set<Question> question;
+    private List<Question> question;
 
 
 

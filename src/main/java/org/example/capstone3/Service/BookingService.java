@@ -18,19 +18,24 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class BookingService {
-    private BookingRepository bookingRepository;
-    private PatientRepository patientRepository;
-    private DoctorRepository doctorRepository;
+    //Hussam fix: final def
+    private final BookingRepository bookingRepository;
+    private final PatientRepository patientRepository;
+    private final DoctorRepository doctorRepository;
 
 
 
     public List<Booking> getAllBookings() {
+        List<Booking> bookings = bookingRepository.findAll();
+        if (bookings.isEmpty()){
+            throw new ApiException("booking not found");
+        }
         return bookingRepository.findAll();
     }
 
-    public void addBooking(Integer patientId,Integer doctorId ) {
-        Patient patient = patientRepository.findPatientById(patientId);
-        Doctor doctor= doctorRepository.findDoctorById(doctorId);
+    public void addBooking(Integer patient_id,Integer doctor_id ) {
+        Patient patient = patientRepository.findPatientById(patient_id);
+        Doctor doctor= doctorRepository.findDoctorById(doctor_id);
         if(patient == null || doctor == null) {
             throw new ApiException("Patient or Doctor is not found");
         }
@@ -39,9 +44,9 @@ public class BookingService {
         bookingRepository.save(booking);
 
     }
-    public void removeBooking(Integer userId,Integer bookingId) {
-        Patient patient = patientRepository.findPatientById(userId);
-        Booking booking=bookingRepository.getBookingById(bookingId);
+    public void removeBooking(Integer patient_id,Integer booking_id) {
+        Patient patient = patientRepository.findPatientById(patient_id);
+        Booking booking=bookingRepository.getBookingById(booking_id);
         if(patient == null || booking == null) {
             throw new ApiException("Patient or Booking is not found");
         }
@@ -49,21 +54,20 @@ public class BookingService {
 
     }
 
-    public void updateBooking(Integer doctorId,Integer bookingId,String status) {
-        Doctor doctor = doctorRepository.findDoctorById(doctorId);
-        Booking booking=bookingRepository.getBookingById(bookingId);
+    public void updateBooking(Integer doctor_id,Integer booking_id,String status) {
+        Doctor doctor = doctorRepository.findDoctorById(doctor_id);
+        Booking booking=bookingRepository.getBookingById(booking_id);
         if(doctor == null) {
             throw new ApiException("Doctor is not found");
         }
         if(booking == null) {
             throw new ApiException("Booking is not found");
         }
-        if(status.toLowerCase().equalsIgnoreCase("go to hospital")||
-        status.toLowerCase().equalsIgnoreCase("wait")  || status.toLowerCase().equalsIgnoreCase("go to plan")) {
-            booking.setStatus(status);
-            bookingRepository.save(booking);
+        if(!status.equals("wait") && !status.equals("go-to-hospital") && !status.equals("go-to-plan") && !status.equals("done")) {
+            throw new ApiException("Booking status is not found");
         }
-        throw new ApiException("Booking status is not found");
+        booking.setStatus(status);
+        bookingRepository.save(booking);
 
     }
 
