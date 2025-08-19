@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+//Hussam
 @RestController
 @RequestMapping("/api/v1/video")
 @RequiredArgsConstructor
@@ -23,7 +24,6 @@ public class VideoController {
     }
 
 
-    // Upload video
     @PostMapping("/upload/{plan_id}")
     public ResponseEntity<ApiResponse> uploadVideo(@PathVariable Integer plan_id, @RequestParam("file") MultipartFile file) throws Exception {
         videoService.saveVideo(plan_id,file);

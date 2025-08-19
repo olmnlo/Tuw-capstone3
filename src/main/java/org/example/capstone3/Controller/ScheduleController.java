@@ -28,15 +28,17 @@ public class ScheduleController {
         return ResponseEntity.status(200).body(new ApiResponse("Schedule added successfully !"));
     }
 
-    @PutMapping
-    public ResponseEntity<?> updateSchedule(Integer id, Schedule schedule){
-        scheduleService.updateSchedule(id, schedule);
+    //Hussam: fix added path variable
+    @PutMapping("/{schedule_id}")
+    public ResponseEntity<?> updateSchedule(@PathVariable Integer schedule_id, Schedule schedule){
+        scheduleService.updateSchedule(schedule_id, schedule);
         return ResponseEntity.status(200).body(new ApiResponse("Schedule updated successfully !"));
     }
 
-    @DeleteMapping
-    public ResponseEntity<?> deleteSchedule(Integer id){
-        scheduleService.deleteSchedule(id);
+    //Hussam: fix added path variable
+    @DeleteMapping("/{schedule_id}")
+    public ResponseEntity<?> deleteSchedule(@PathVariable Integer schedule_id){
+        scheduleService.deleteSchedule(schedule_id);
         return ResponseEntity.status(200).body(new ApiResponse("Schedule deleted successfully !"));
     }
 

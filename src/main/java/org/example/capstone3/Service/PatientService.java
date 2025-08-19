@@ -2,7 +2,7 @@ package org.example.capstone3.Service;
 
 import lombok.RequiredArgsConstructor;
 import org.example.capstone3.Api.ApiException;
-import org.example.capstone3.DTO.PatientDTO;
+import org.example.capstone3.DTOin.PatientDTO;
 import org.example.capstone3.Model.Patient;
 import org.example.capstone3.Repository.PatientRepository;
 import org.springframework.stereotype.Service;

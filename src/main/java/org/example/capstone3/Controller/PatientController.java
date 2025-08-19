@@ -3,7 +3,7 @@ package org.example.capstone3.Controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.capstone3.Api.ApiResponse;
-import org.example.capstone3.DTO.PatientDTO;
+import org.example.capstone3.DTOin.PatientDTO;
 import org.example.capstone3.Model.Patient;
 import org.example.capstone3.Service.PatientService;
 import org.springframework.http.HttpStatus;
@@ -35,12 +35,14 @@ public class PatientController {
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("patient added successfully"));
     }
 
+    //Hussam
     @PutMapping("/{patient_id}")
     public ResponseEntity<ApiResponse> updatePatient(@PathVariable Integer patient_id,@Valid@RequestBody PatientDTO patientDTO){
         patientService.updatePatient(patient_id, patientDTO);
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("patient updated successfully"));
     }
 
+    //Hussam
     @DeleteMapping("/{patient_id}")
     public ResponseEntity<ApiResponse> deletePatient(@PathVariable Integer patient_id){
         patientService.deletePatient(patient_id);

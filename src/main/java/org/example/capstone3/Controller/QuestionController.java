@@ -8,10 +8,10 @@ import org.example.capstone3.Model.Question;
 import org.example.capstone3.Service.QuestionService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+//Hussam: general fix
 //Mohammed
 @RestController
-@RequestMapping("/api/v1/QUESTION")
+@RequestMapping("/api/v1/question")
 @RequiredArgsConstructor
 public class QuestionController {
 
@@ -23,24 +23,27 @@ public class QuestionController {
     }
 
 
-    @PostMapping("/ADD")
-    public ResponseEntity<?> addQuestion(@RequestBody @Valid Question question){
+    //Hussam: fixed make it clear and small letter
+    @PostMapping
+    public ResponseEntity<ApiResponse> addQuestion(@RequestBody @Valid Question question){
         questionService.addQuestion(question);
         return ResponseEntity.ok().body(new ApiResponse("Question added successfully"));
     }
-    @PutMapping("/UPDATE/{id}")
-    public ResponseEntity<?> updateQuestion(@PathVariable Integer id,@RequestBody @Valid Question question){
-        questionService.updateQuestion(id, question);
+    //Hussam: fixed make it clear and small letter
+    @PutMapping("/{question_id}")
+    public ResponseEntity<ApiResponse> updateQuestion(@PathVariable Integer question_id,@RequestBody @Valid Question question){
+        questionService.updateQuestion(question_id, question);
         return ResponseEntity.ok().body(new ApiResponse("Question updated successfully"));
     }
-    @DeleteMapping("/DELETE/{id}")
-    public ResponseEntity<?> deleteQuestion(@PathVariable Integer id){
-        questionService.deleteQuestion(id);
+    //Hussam: fixed make it clear and small letter
+    @DeleteMapping("/{question_id}")
+    public ResponseEntity<ApiResponse> deleteQuestion(@PathVariable Integer question_id){
+        questionService.deleteQuestion(question_id);
         return ResponseEntity.ok().body(new ApiResponse("Question deleted successfully"));
     }
-    @PutMapping("/ASSIGN/Question/To/Patient/{patientId}")
-    public ResponseEntity<?> assignQuestionToPatient(@PathVariable Integer patientId) {
-        questionService.assignQuestionToPatient(patientId);
+    @PutMapping("assign/patient/{patient_id}")
+    public ResponseEntity<ApiResponse> assignQuestionToPatient(@PathVariable Integer patient_id) {
+        questionService.assignQuestionToPatient(patient_id);
         return ResponseEntity.status(200).body(new ApiResponse("Successfully assigned plan to patient"));
     }
 
