@@ -33,7 +33,7 @@ public class OpenAiConnect {
                 .orElseThrow(() -> new RuntimeException("Patient not found"));
 
         // 2. Collect answers
-        String answers = patient.getQuestion().stream()
+        String answers = patient.getAnswers().stream()
                 .map(q -> q.getQuestion() + ": " + q.getAnswer())
                 .reduce("", (a, b) -> a + "\n" + b);
 

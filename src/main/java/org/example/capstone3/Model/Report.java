@@ -23,13 +23,9 @@ public class Report {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @NotEmpty(message = "description can't be null")
     @Column(columnDefinition = "text not null")
     private String description;
 
-    @NotNull(message = "appointment date is required")
-    @FutureOrPresent(message = "appointment date must be in future")
-    @JsonFormat(pattern = "yyyy-MM-ddTHH:mm:ss")
     @Column(columnDefinition = "TIMESTAMP not null")
     private LocalDate reportDate;
 
