@@ -28,7 +28,8 @@ public class PlanController {
         planService.updatePlan(doctorId,planId, plan);
         return ResponseEntity.ok().body(new ApiResponse("plan updated successfully"));
     }
-    @DeleteMapping("/DELETE/{doctorId}/{planId")
+    //Hussam : fixed the missed '}'
+    @DeleteMapping("/DELETE/{doctorId}/{planId}")
     public ResponseEntity<?> deletePlan(@PathVariable Integer doctorId,@PathVariable Integer planId){
        planService.deletePlan(doctorId,planId);
         return ResponseEntity.ok().body(new ApiResponse("plan deleted successfully"));

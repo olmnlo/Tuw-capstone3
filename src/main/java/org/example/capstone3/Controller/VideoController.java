@@ -2,42 +2,32 @@ package org.example.capstone3.Controller;
 
 import lombok.RequiredArgsConstructor;
 import org.example.capstone3.Api.ApiResponse;
+import org.example.capstone3.Model.Video;
+import org.example.capstone3.Service.VideoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 @RestController
 @RequestMapping("/api/v1/video")
 @RequiredArgsConstructor
 public class VideoController {
 
+    private final VideoService videoService;
+
+
+    @GetMapping("/{video_id}")
+    public ResponseEntity<Video> getVideoById(@PathVariable Integer video_id){
+        return ResponseEntity.status(HttpStatus.OK).body(videoService.getVideo(video_id));
+    }
+
+
     // Upload video
-    @PostMapping("/upload")
-    public ResponseEntity<ApiResponse> uploadVideo(@RequestParam("file") MultipartFile file) {
-        try {
-            if (file.isEmpty()) {
-                return ResponseEntity.badRequest().body(new ApiResponse("File is empty"));
-            }
+    @PostMapping("/upload/{plan_id}")
+    public ResponseEntity<ApiResponse> uploadVideo(@PathVariable Integer plan_id, @RequestParam("file") MultipartFile file) throws Exception {
+        videoService.saveVideo(plan_id,file);
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("video uploaded successfully"));
 
-            // Save the video in a folder
-            String uploadDir = "uploads/videos/";
-            Path path = Paths.get(uploadDir + file.getOriginalFilename());
-            Files.createDirectories(path.getParent()); // ensure directory exists
-            Files.write(path, file.getBytes());
-
-            return ResponseEntity.ok(new ApiResponse("Video uploaded successfully: " + path.toString()));
-
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ApiResponse("Failed to upload video: " + e.getMessage()));
-        }
     }
 }
