@@ -32,7 +32,6 @@ public class ReportService {
 
 
 
-
     public List<Report> findAllReports(){
         List<Report> reports = reportRepository.findAll();
         if (reports.isEmpty()){
