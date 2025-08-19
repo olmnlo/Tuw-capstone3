@@ -2,38 +2,35 @@ package org.example.capstone3.Service;
 
 import lombok.RequiredArgsConstructor;
 import org.example.capstone3.Api.ApiException;
-import org.example.capstone3.Model.Patient;
+import org.example.capstone3.DTOin.QuestionDTO;
 import org.example.capstone3.Model.Question;
 import org.example.capstone3.Repository.PatientRepository;
 import org.example.capstone3.Repository.QuestionRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 //Mohammed
 @Service
 @RequiredArgsConstructor
 public class QuestionService {
     private final QuestionRepository questionRepository;
-    private final PatientRepository patientRepository;
 
 
     public List<Question> getAllQuestions() {
         return questionRepository.findAll();
     }
-
-    public void addQuestion(Question question) {
+//Hussam : fix
+    public void addQuestion(QuestionDTO questionDTO) {
+        Question question = new Question(null, questionDTO.getQuestion());
         questionRepository.save(question);
     }
 
-    public void updateQuestion(Integer questionId, Question question) {
+    public void updateQuestion(Integer questionId, QuestionDTO questionDTO) {
         Question question1 = questionRepository.findQuestionById(questionId);
         if (question1 == null) {
             throw new ApiException("Question not found");
         }
-        question1.setQuestion(question.getQuestion());
-        question1.setAnswer(question.getAnswer());
+        question1.setQuestion(questionDTO.getQuestion());
         questionRepository.save(question1);
     }
 
@@ -45,13 +42,15 @@ public class QuestionService {
         questionRepository.delete(question1);
     }
 
-    public void assignQuestionToPatient(Integer patientId) {
-        Patient patient = patientRepository.findPatientById(patientId);
-        if (patient == null) {
-            throw new ApiException("Question or Plan not found");
-        }
-        List<Question> questions = new ArrayList<>();
+//    public void assignQuestionToPatient(Integer patientId) {
+//        Patient patient = patientRepository.findPatientById(patientId);
+//        if (patient == null) {
+//            throw new ApiException("Question or Plan not found");
+//        }
+//        for (Question question : questionRepository.findAll()){
+//            question.setPatient(patient);
+//            questionRepository.save(question);
+//        }
 
 
     }
-}

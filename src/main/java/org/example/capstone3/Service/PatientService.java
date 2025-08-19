@@ -45,7 +45,7 @@ public class PatientService {
         oldPatient.setUsername(patient.getUsername());
         oldPatient.setReport(new ArrayList<>());
         oldPatient.setBooking(new ArrayList<>());
-        oldPatient.setQuestion(new ArrayList<>());
+        oldPatient.setAnswers(new ArrayList<>());
 
         patientRepository.save(oldPatient);
     }

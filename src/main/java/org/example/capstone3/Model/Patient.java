@@ -51,8 +51,8 @@ public class Patient {
     private List<Report> report;
 
 
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "patient")
-    private List<Question> question;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "patient")
+    private List<Answer> answers;
 
 
 
