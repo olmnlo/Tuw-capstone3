@@ -24,19 +24,20 @@ public class DoctorService {
         return doctors;
     }
 
-
+    //Hussam some fix
     public void addDoctor(DoctorDTO doctorDTO){
         Doctor doctor = new Doctor(null, doctorDTO.getUsername(),doctorDTO.getPassword(),doctorDTO.getName(),doctorDTO.getAge(),doctorDTO.getSex(),null,null,null);
         doctorRepository.save(doctor);
     }
 
+    //Hussam some fix
     public void updateDoctor(Integer id, DoctorDTO doctorDTO){
         Doctor oldDoctor = doctorRepository.findDoctorById(id);
 
         if (oldDoctor == null){
             throw new ApiException("no doctor found !");
         }
-
+        //Hussam fix
         oldDoctor.setAge(doctorDTO.getAge());
         oldDoctor.setName(doctorDTO.getName());
         oldDoctor.setPassword(doctorDTO.getPassword());

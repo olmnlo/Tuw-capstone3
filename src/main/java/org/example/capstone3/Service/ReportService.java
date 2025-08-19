@@ -85,6 +85,7 @@ public class ReportService {
     }
 
 
+    //Hussam fix
     //Mohammed
     @Transactional  // أو @Transactional(readOnly = true)
     public byte[] generatePdfReport(Integer patientId, Integer doctorId){
@@ -100,7 +101,7 @@ public class ReportService {
         return reportPdfService.generate(report);
     }
 
-
+    //Hussam make it void
     public void generateReport(Integer patientId, Integer doctor_id) {
         // 6. Save
         reportRepository.save(openAiConnect.generateReport(patientId, doctor_id));

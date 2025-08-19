@@ -44,6 +44,7 @@ public class PlanService {
 //        planRepository.save(plan);
 //
 //    }
+    //Hussam add
     public void addPlan(Integer patientId, Integer doctorId, PlanDTO planDTO) {
         Patient patient = patientRepository.findPatientById(patientId);
         if (patient == null) {
@@ -58,7 +59,7 @@ public class PlanService {
         if (planRepository.existsPlanByDoctor_IdAndPatient_Id(doctorId, patientId)) {
             throw new ApiException("Patient already has a plan from this doctor");
         }
-
+        //Hussam add
         Plan plan = new Plan(
                 null, // Will be set to patientId because of @MapsId
                 planDTO.getName(),
@@ -70,7 +71,7 @@ public class PlanService {
 
         planRepository.save(plan);
     }
-
+    //Hussam fix
     public void updatePlan(Integer patientId, Integer planId, PlanDTO planDTO) {
         Plan oldPlan = planRepository.findPlanById(planId);
         if (oldPlan == null) {
@@ -84,6 +85,7 @@ public class PlanService {
             throw new ApiException("Patient not found");
         }
 
+        //Hussam fix
         oldPlan.setName(planDTO.getName());
         oldPlan.setDescription(planDTO.getDescription());
         oldPlan.setVideo(new ArrayList<>());
@@ -107,6 +109,7 @@ public class PlanService {
         if (plan == null) {
             throw new ApiException("Plan not found");
         }
+        //Hussam add
         Doctor doctor = doctorRepository.findDoctorById(doctorId);
         if (doctor == null) {
             throw new ApiException("Doctor not found");
@@ -120,6 +123,7 @@ public class PlanService {
     }
 
     //TODO remove this not important it is assigned directly when add
+    //Hussam removed this
 //    public void assignPatientToPlan(Integer planId, Integer patientId) {
 //        Plan plan = planRepository.findPlanById(planId);
 //        Patient patient = patientRepository.findPatientById(patientId);

@@ -49,7 +49,7 @@ public class PatientService {
 
         patientRepository.save(oldPatient);
     }
-
+    //Hussam
     public void deletePatient(Integer patient_id) {
         Patient oldPatient = patientRepository.findPatientById(patient_id);
         if (oldPatient == null) {

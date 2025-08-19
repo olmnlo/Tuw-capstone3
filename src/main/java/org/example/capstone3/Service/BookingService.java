@@ -24,12 +24,7 @@ public class BookingService {
     private final PatientRepository patientRepository;
     private final DoctorRepository doctorRepository;
 
-
-
-
-
-
-
+    //Hussam some fix
     public List<Booking> getAllBookings() {
         List<Booking> bookings = bookingRepository.findAll();
         if (bookings.isEmpty()) {
@@ -37,7 +32,7 @@ public class BookingService {
         }
         return bookingRepository.findAll();
     }
-
+    //Hussam some fix
     public void addBooking(Integer patient_id, Integer doctor_id) {
         Patient patient = patientRepository.findPatientById(patient_id);
         Doctor doctor = doctorRepository.findDoctorById(doctor_id);
@@ -49,7 +44,7 @@ public class BookingService {
         bookingRepository.save(booking);
 
     }
-
+    //Hussam some fix
     public void removeBooking(Integer patient_id, Integer booking_id) {
         Patient patient = patientRepository.findPatientById(patient_id);
         Booking booking = bookingRepository.getBookingById(booking_id);
@@ -59,7 +54,7 @@ public class BookingService {
         bookingRepository.delete(booking);
 
     }
-
+    //Hussam some fix
     public void updateBooking(Integer doctor_id, Integer booking_id, String status) {
         Doctor doctor = doctorRepository.findDoctorById(doctor_id);
         Booking booking = bookingRepository.getBookingById(booking_id);

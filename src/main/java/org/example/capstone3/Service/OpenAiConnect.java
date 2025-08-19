@@ -36,7 +36,7 @@ public class OpenAiConnect {
             .baseUrl("https://api.openai.com/v1/chat/completions")
             .build();
 
-
+    //Hussam some fix
     public Report generateReport(Integer patientId, Integer doctor_id) {
         // 1. Fetch patient and doctor
         Patient patient = patientRepository.findPatientById(patientId);
@@ -47,7 +47,7 @@ public class OpenAiConnect {
         if (doctor == null){
             throw new ApiException("doctor not found");
         }
-
+        //Hussam some fix
         // 2. Collect answers
         List<Answer> patientAnswers = patient.getAnswers();
         for (Answer a : patientAnswers){
@@ -58,8 +58,13 @@ public class OpenAiConnect {
         String answers = patient.getAnswers().stream()
                 .map(q -> q.getQuestion() + ": " + q.getAnswer())
                 .reduce("", (a, b) -> a + "\n" + b);
+        //Hussam some fix
         // 3. Build prompt
-        String prompt = "Summarize the following patient answers into a clear description for a physiotherapist:\n" + answers;
+        String prompt = """
+                You are a professional physiotherapist in the most famous hospitals in the world. You have specific questions and your patient answers them through answers. You can describe the condition and explain the problem in short summary for other beginner physiotherapist to understand the problem
+                This is questions with patient answer:
+                \n
+                """ + answers;
 
         // 4. Call ChatGPT API
         String summary = webClient.post()
