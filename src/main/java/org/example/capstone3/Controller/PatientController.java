@@ -36,6 +36,7 @@ public class PatientController {
     }
 
     //Hussam
+
     @PutMapping("/{patient_id}")
     public ResponseEntity<ApiResponse> updatePatient(@PathVariable Integer patient_id,@Valid@RequestBody PatientDTO patientDTO){
         patientService.updatePatient(patient_id, patientDTO);
