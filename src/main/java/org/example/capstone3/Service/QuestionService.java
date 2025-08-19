@@ -19,17 +19,19 @@ public class QuestionService {
     public List<Question> getAllQuestions() {
         return questionRepository.findAll();
     }
-//Hussam : fix
+//Hussam : add
     public void addQuestion(QuestionDTO questionDTO) {
         Question question = new Question(null, questionDTO.getQuestion());
         questionRepository.save(question);
     }
 
+    //Hussam fix
     public void updateQuestion(Integer questionId, QuestionDTO questionDTO) {
         Question question1 = questionRepository.findQuestionById(questionId);
         if (question1 == null) {
             throw new ApiException("Question not found");
         }
+        //Hussam fix
         question1.setQuestion(questionDTO.getQuestion());
         questionRepository.save(question1);
     }

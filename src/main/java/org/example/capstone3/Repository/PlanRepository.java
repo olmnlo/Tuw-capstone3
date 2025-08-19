@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
 public interface PlanRepository extends JpaRepository<Plan, Integer> {
 
     Plan findPlanById(Integer id);
-
+//Hussam fixed
     boolean existsPlanByDoctor_IdAndPatient_Id(Integer doctorId, Integer patientId);
 }

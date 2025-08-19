@@ -8,7 +8,7 @@ import org.example.capstone3.Model.Doctor;
 import org.example.capstone3.Service.DoctorService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+//Hussam general fix
 @RestController
 @RequestMapping("/api/v1/doctor")
 @RequiredArgsConstructor
