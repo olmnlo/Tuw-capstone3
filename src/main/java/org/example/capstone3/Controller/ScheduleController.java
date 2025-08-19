@@ -1,5 +1,6 @@
 package org.example.capstone3.Controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.capstone3.Api.ApiResponse;
 import org.example.capstone3.Model.Report;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/schedule")
 @RequiredArgsConstructor
+//Aziz
 public class ScheduleController {
 
     private final ScheduleService scheduleService;
@@ -23,14 +25,14 @@ public class ScheduleController {
 
 
     @PostMapping
-    public ResponseEntity<?> addSchedule(Schedule schedule){
+    public ResponseEntity<?> addSchedule(@RequestBody @Valid Schedule schedule){
         scheduleService.addSchedule(schedule);
         return ResponseEntity.status(200).body(new ApiResponse("Schedule added successfully !"));
     }
 
     //Hussam: fix added path variable
     @PutMapping("/{schedule_id}")
-    public ResponseEntity<?> updateSchedule(@PathVariable Integer schedule_id, Schedule schedule){
+    public ResponseEntity<?> updateSchedule(@PathVariable Integer schedule_id, @RequestBody @Valid Schedule schedule){
         scheduleService.updateSchedule(schedule_id, schedule);
         return ResponseEntity.status(200).body(new ApiResponse("Schedule updated successfully !"));
     }
