@@ -48,7 +48,6 @@ public class Doctor {
     private Set<Schedule> schedule;
 
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "doctor")
-    @JsonIgnore
     private Set<Booking> booking;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "doctor")

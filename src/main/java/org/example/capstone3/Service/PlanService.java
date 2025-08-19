@@ -2,6 +2,7 @@ package org.example.capstone3.Service;
 
 import lombok.RequiredArgsConstructor;
 import org.example.capstone3.Api.ApiException;
+import org.example.capstone3.DTOin.PlanDTO;
 import org.example.capstone3.Model.Doctor;
 import org.example.capstone3.Model.Patient;
 import org.example.capstone3.Model.Plan;
@@ -10,6 +11,7 @@ import org.example.capstone3.Repository.PatientRepository;
 import org.example.capstone3.Repository.PlanRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -23,18 +25,29 @@ public class PlanService {
         return planRepository.findAll();
     }
 
-    public void addPlan(Integer patientId, Plan plan) {
+    //Hussam: fixing
+    public void addPlan(Integer patientId,Integer doctor_id ,PlanDTO planDTO) {
         Patient patient = patientRepository.findPatientById(patientId);
         if (patient == null) {
             throw new ApiException("Patient not found");
         }
+        Doctor doctor = doctorRepository.findDoctorById(doctor_id);
+        if (doctor == null){
+            throw new ApiException("doctor not found");
+        }
 
-        throw new ApiException("Plan already exists");
+        if (planRepository.existsPlanByDoctor_IdAndPatient_Id(doctor_id, patientId)){
+            throw new ApiException("patient has plan");
+        }
+
+        Plan plan = new Plan(null, planDTO.getName(),planDTO.getDescription(),patient, doctor, new ArrayList<>());
+        planRepository.save(plan);
+
     }
 
-    public void updatePlan(Integer patientId, Integer planId, Plan plan) {
-        Plan plan1 = planRepository.findPlanById(planId);
-        if (plan1 == null) {
+    public void updatePlan(Integer patientId, Integer planId, PlanDTO planDTO) {
+        Plan oldPlan = planRepository.findPlanById(planId);
+        if (oldPlan == null) {
             throw new ApiException("Plan not found");
         }
         Patient patient = patientRepository.findPatientById(patientId);
@@ -45,9 +58,10 @@ public class PlanService {
             throw new ApiException("Patient not found");
         }
 
-
-        plan1.setDescription(plan.getDescription());
-        planRepository.save(plan1);
+        oldPlan.setName(planDTO.getName());
+        oldPlan.setDescription(planDTO.getDescription());
+        oldPlan.setVideo(new ArrayList<>());
+        planRepository.save(oldPlan);
     }
 
     public void deletePlan(Integer doctorID,Integer planId) {
@@ -56,22 +70,23 @@ public class PlanService {
             throw new ApiException("Plan not found");
         }
         Doctor doctor= doctorRepository.findDoctorById(doctorID);
-        if(doctor.getId().equals(plan.getDoctor().getId())) {}
+        if(doctor.getId().equals(plan.getDoctor().getId())) {
+            throw new ApiException("doctor not authorised to change this plan");
+        }
         planRepository.delete(plan);
     }
 
-    public void assignPatientToPlan(Integer planId, Integer patientId) {
-        Plan plan = planRepository.findPlanById(planId);
-        Patient patient = patientRepository.findPatientById(patientId);
-        if (plan == null || patient == null) {
-            throw new ApiException("Plan or Patient not found");
-        }
-        patient.setPlan(plan);
-        plan.setPatient(patient);
-        planRepository.save(plan);
-        patientRepository.save(patient);
-
-
-    }
+    //TODO remove this not important it is assigned directly when add
+//    public void assignPatientToPlan(Integer planId, Integer patientId) {
+//        Plan plan = planRepository.findPlanById(planId);
+//        Patient patient = patientRepository.findPatientById(patientId);
+//        if (plan == null || patient == null) {
+//            throw new ApiException("Plan or Patient not found");
+//        }
+//        plan.setPatient(patient);
+//        planRepository.save(plan);
+//
+//
+//    }
 
 }

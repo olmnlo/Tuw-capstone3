@@ -18,9 +18,10 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class BookingService {
-    private BookingRepository bookingRepository;
-    private PatientRepository patientRepository;
-    private DoctorRepository doctorRepository;
+    //Hussam fix: final def
+    private final BookingRepository bookingRepository;
+    private final PatientRepository patientRepository;
+    private final DoctorRepository doctorRepository;
 
 
 
@@ -62,12 +63,11 @@ public class BookingService {
         if(booking == null) {
             throw new ApiException("Booking is not found");
         }
-        if(status.toLowerCase().equalsIgnoreCase("go to hospital")||
-        status.toLowerCase().equalsIgnoreCase("wait")  || status.toLowerCase().equalsIgnoreCase("go to plan")) {
-            booking.setStatus(status);
-            bookingRepository.save(booking);
+        if(!status.equals("wait") && !status.equals("go-to-hospital") && !status.equals("go-to-plan") && !status.equals("done")) {
+            throw new ApiException("Booking status is not found");
         }
-        throw new ApiException("Booking status is not found");
+        booking.setStatus(status);
+        bookingRepository.save(booking);
 
     }
 

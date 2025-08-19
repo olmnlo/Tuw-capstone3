@@ -1,12 +1,13 @@
 package org.example.capstone3.Service;
-
+import jakarta.transaction.Transactional;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.RequiredArgsConstructor;
-//import lombok.Value;
 import org.springframework.beans.factory.annotation.Value;
 import org.example.capstone3.Api.ApiException;
+import org.example.capstone3.Model.Doctor;
 import org.example.capstone3.Model.Patient;
 import org.example.capstone3.Model.Report;
+import org.example.capstone3.Repository.DoctorRepository;
 import org.example.capstone3.Repository.PatientRepository;
 import org.example.capstone3.Repository.ReportRepository;
 import org.springframework.http.HttpHeaders;
@@ -22,7 +23,11 @@ import java.util.Map;
 //Aziz
 public class ReportService {
     private final ReportRepository reportRepository;
+
+    private final ReportPdfService reportPdfService;
+    private final DoctorRepository doctorRepository;
     private final PatientRepository patientRepository;
+
 
     @Value("${openai.api.key}")
     private String openaiApiKey;
@@ -31,6 +36,7 @@ public class ReportService {
             .baseUrl("https://api.openai.com/v1/chat/completions")
          //   .defaultHeader(HttpHeaders.AUTHORIZATION, "Bearer " + System.getenv("OPENAI_API_KEY"))
             .build();
+
 
 
     public List<Report> findAllReports(){
@@ -64,6 +70,23 @@ public class ReportService {
         }
 
         reportRepository.delete(report);
+    }
+
+
+
+    //Mohammed
+    @Transactional  // أو @Transactional(readOnly = true)
+    public byte[] generatePdfReport(Integer patientId, Integer doctorId, Integer reportId){
+        Report report = reportRepository.findReportById(reportId);
+        if (report == null) throw new ApiException("report not found!");
+
+        if (report.getPatient() == null || report.getDoctor() == null
+                || !report.getPatient().getId().equals(patientId)
+                || !report.getDoctor().getId().equals(doctorId)) {
+            throw new ApiException("report does not belong to given patient/doctor");
+        }
+
+        return reportPdfService.generate(report);
     }
 
 
@@ -103,6 +126,7 @@ public class ReportService {
         // 6. Save
         return reportRepository.save(report);
     }
+
 
     public List<Report> getReportsByPatient(Integer patientId) {
         return reportRepository.findByPatientId(patientId);

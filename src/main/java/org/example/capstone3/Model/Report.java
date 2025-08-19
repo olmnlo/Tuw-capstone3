@@ -24,7 +24,7 @@ public class Report {
     private Integer id;
 
     @NotEmpty(message = "description can't be null")
-    @Column(columnDefinition = "varchar(500) not null")
+    @Column(columnDefinition = "text not null")
     private String description;
 
     @NotNull(message = "appointment date is required")
