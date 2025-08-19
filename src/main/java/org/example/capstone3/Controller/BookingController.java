@@ -33,8 +33,8 @@ public class BookingController {
         return ResponseEntity.ok().body(new ApiResponse("Booking has been deleted"));
     }
     //Hussam: fix make it small letters and clear
-    @PutMapping("/doctor/{doctor_id}/booking{booking_id}/status/{status}")
-    public ResponseEntity<?> updateBooking(@PathVariable Integer doctor_id, @PathVariable Integer booking_id,@PathVariable String status) {
+    @PutMapping("/doctor/{doctor_id}/booking{booking_id}/status")
+    public ResponseEntity<?> updateBooking(@PathVariable Integer doctor_id, @PathVariable Integer booking_id,@RequestParam("status") String status) {
         bookingService.updateBooking(doctor_id, booking_id, status);
         return ResponseEntity.ok().body(new ApiResponse("Booking has been updated"));
     }

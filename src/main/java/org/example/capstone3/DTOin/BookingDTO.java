@@ -16,12 +16,11 @@ import java.time.LocalDateTime;
 @Setter
 @Getter
 @AllArgsConstructor
-@NoArgsConstructor
 public class BookingDTO {
 
     @NotNull(message = "appointment date is required")
     @FutureOrPresent(message = "appointment date must be in future")
-    @JsonFormat(pattern = "yyyy-MM-ddTHH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime appointmentDate;
 
     @NotNull(message = "appointment day is required")
