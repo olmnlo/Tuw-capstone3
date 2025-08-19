@@ -10,9 +10,12 @@ import org.example.capstone3.Service.ReportService;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/report")
 @RequiredArgsConstructor
+//Aziz
 public class ReportController {
 
     private final ReportService reportService;
@@ -23,15 +26,15 @@ public class ReportController {
     }
 
 
+
     //Mohammed "Add RequistBody And Add Valid
-    @PostMapping
+    @PostMapping("/add/patient")
     public ResponseEntity<ApiResponse> addReport(@RequestBody@Valid Report report){
         reportService.addReport(report);
         return ResponseEntity.status(200).body(new ApiResponse("Report added successfully !"));
     }
 
     //Hussam: fix make path variable
-
     //Mohammed "Add RequistBody And Add Valid
     @PutMapping("/{report_id}")
     public ResponseEntity<ApiResponse> updateReport(@PathVariable Integer report_id,@RequestBody @Valid Report report){
@@ -45,6 +48,7 @@ public class ReportController {
         reportService.deleteReport(report_id);
         return ResponseEntity.status(200).body(new ApiResponse("Report deleted successfully !"));
     }
+
 
     //Mohammed
     @GetMapping(
@@ -67,6 +71,22 @@ public class ReportController {
         );
 
         return new ResponseEntity<>(pdf, headers, HttpStatus.OK);
+  }
+
+
+    // Generate a new report from patient answers
+    @PostMapping("/patient/{patientId}")
+    public ResponseEntity<Report> generateReport(@PathVariable Integer patientId) {
+        Report report = reportService.generateReport(patientId);
+        return ResponseEntity.ok(report);
     }
+
+    // Get all reports for a patient (for physiotherapist view)
+    @GetMapping("/patient/{patientId}")
+    public ResponseEntity<List<Report>> getReportsByPatient(@PathVariable Integer patientId) {
+        List<Report> reports = reportService.getReportsByPatient(patientId);
+        return ResponseEntity.ok(reports);
+    }
+    
 
 }
