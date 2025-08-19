@@ -7,17 +7,24 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@NoArgsConstructor
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
-public class Question {
+@NoArgsConstructor
+public class Answer {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(columnDefinition = "text not null")
-    private String question;
+    @ManyToOne
+    @JsonIgnore
+    private Patient patient;
 
+    @ManyToOne
+    @JsonIgnore
+    private Question question;
+
+    private String answer;
 }

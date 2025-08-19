@@ -2,6 +2,7 @@ package org.example.capstone3.Service;
 import jakarta.transaction.Transactional;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.RequiredArgsConstructor;
+import org.example.capstone3.DTOin.ReportDTO;
 import org.springframework.beans.factory.annotation.Value;
 import org.example.capstone3.Api.ApiException;
 import org.example.capstone3.Model.Doctor;
@@ -26,6 +27,8 @@ public class ReportService {
     private final ReportPdfService reportPdfService;
     private final OpenAiConnect openAiConnect;
 
+    private final PatientRepository patientRepository;
+    private final DoctorRepository doctorRepository;
 
 
 
@@ -37,18 +40,37 @@ public class ReportService {
         return reports;
     }
 
-    public void addReport(Report report){
-        reportRepository.save(report);
+    public void addReport(ReportDTO report){
+        Patient patient = patientRepository.findPatientById(report.getPatientId());
+        if (patient == null){
+            throw new ApiException("patient not found");
+        }
+        Doctor doctor =doctorRepository.findDoctorById(report.getDoctorId());
+        if (doctor == null){
+            throw new ApiException("doctor not found");
+        }
+        Report newReport = new Report(null, report.getDescription(), report.getReportDate(), patient, doctor);
+        reportRepository.save(newReport);
     }
 
-    public void updateReport(Integer id, Report report){
+    public void updateReport(Integer id, ReportDTO reportDTO){
         Report oldReport = reportRepository.findReportById(id);
-
         if (oldReport == null){
             throw new ApiException("no report found !");
         }
+        Patient patient = patientRepository.findPatientById(reportDTO.getPatientId());
+        if (patient == null){
+            throw new ApiException("patient not found");
+        }
 
-
+        Doctor doctor = doctorRepository.findDoctorById(reportDTO.getDoctorId());
+        if (doctor == null){
+            throw new ApiException("doctor not found");
+        }
+        oldReport.setReportDate(reportDTO.getReportDate());
+        oldReport.setPatient(patient);
+        oldReport.setDoctor(doctor);
+        oldReport.setDescription(reportDTO.getDescription());
         reportRepository.save(oldReport);
     }
 

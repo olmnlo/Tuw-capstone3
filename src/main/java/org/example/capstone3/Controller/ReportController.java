@@ -3,6 +3,7 @@ package org.example.capstone3.Controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.capstone3.Api.ApiResponse;
+import org.example.capstone3.DTOin.ReportDTO;
 import org.example.capstone3.Model.Doctor;
 import org.example.capstone3.Model.Report;
 import org.example.capstone3.Service.DoctorService;
@@ -29,16 +30,16 @@ public class ReportController {
 
     //Mohammed "Add RequistBody And Add Valid
     @PostMapping("/add/patient")
-    public ResponseEntity<ApiResponse> addReport(@RequestBody@Valid Report report){
-        reportService.addReport(report);
+    public ResponseEntity<ApiResponse> addReport(@RequestBody@Valid ReportDTO reportDTO){
+        reportService.addReport(reportDTO);
         return ResponseEntity.status(200).body(new ApiResponse("Report added successfully !"));
     }
 
     //Hussam: fix make path variable
     //Mohammed "Add RequistBody And Add Valid
     @PutMapping("/{report_id}")
-    public ResponseEntity<ApiResponse> updateReport(@PathVariable Integer report_id,@RequestBody @Valid Report report){
-        reportService.updateReport(report_id, report);
+    public ResponseEntity<ApiResponse> updateReport(@PathVariable Integer report_id,@RequestBody @Valid ReportDTO reportDTO){
+        reportService.updateReport(report_id, reportDTO);
         return ResponseEntity.status(200).body(new ApiResponse("Report updated successfully !"));
     }
 
@@ -53,8 +54,6 @@ public class ReportController {
     //Mohammed
     @GetMapping(
             value = "/Patient/{patientId}/Doctor/{doctorId}/Report/{reportId}/pdf",
-
-
             produces = MediaType.APPLICATION_PDF_VALUE
     )
     public ResponseEntity<byte[]> generatePdfReport(@PathVariable Integer patientId,

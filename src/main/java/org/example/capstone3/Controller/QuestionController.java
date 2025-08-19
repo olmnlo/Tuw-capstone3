@@ -3,6 +3,7 @@ package org.example.capstone3.Controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.capstone3.Api.ApiResponse;
+import org.example.capstone3.DTOin.QuestionDTO;
 import org.example.capstone3.Model.Plan;
 import org.example.capstone3.Model.Question;
 import org.example.capstone3.Service.QuestionService;
@@ -25,14 +26,14 @@ public class QuestionController {
 
     //Hussam: fixed make it clear and small letter
     @PostMapping
-    public ResponseEntity<ApiResponse> addQuestion(@RequestBody @Valid Question question){
-        questionService.addQuestion(question);
+    public ResponseEntity<ApiResponse> addQuestion(@RequestBody @Valid QuestionDTO questionDTO){
+        questionService.addQuestion(questionDTO);
         return ResponseEntity.ok().body(new ApiResponse("Question added successfully"));
     }
     //Hussam: fixed make it clear and small letter
     @PutMapping("/{question_id}")
-    public ResponseEntity<ApiResponse> updateQuestion(@PathVariable Integer question_id,@RequestBody @Valid Question question){
-        questionService.updateQuestion(question_id, question);
+    public ResponseEntity<ApiResponse> updateQuestion(@PathVariable Integer question_id,@RequestBody @Valid QuestionDTO questionDTO){
+        questionService.updateQuestion(question_id, questionDTO);
         return ResponseEntity.ok().body(new ApiResponse("Question updated successfully"));
     }
     //Hussam: fixed make it clear and small letter
@@ -40,11 +41,6 @@ public class QuestionController {
     public ResponseEntity<ApiResponse> deleteQuestion(@PathVariable Integer question_id){
         questionService.deleteQuestion(question_id);
         return ResponseEntity.ok().body(new ApiResponse("Question deleted successfully"));
-    }
-    @PutMapping("assign/patient/{patient_id}")
-    public ResponseEntity<ApiResponse> assignQuestionToPatient(@PathVariable Integer patient_id) {
-        questionService.assignQuestionToPatient(patient_id);
-        return ResponseEntity.status(200).body(new ApiResponse("Successfully assigned plan to patient"));
     }
 
 
