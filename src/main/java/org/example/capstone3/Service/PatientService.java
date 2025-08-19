@@ -29,7 +29,7 @@ public class PatientService {
 
     //Hussam
     public void addPatient(PatientDTO patientDTO){
-        Patient patient = new Patient(null, patientDTO.getName(),patientDTO.getUsername(),patientDTO.getPassword(), patientDTO.getAge(), patientDTO.getSex(), new ArrayList<>(), new Plan(), new ArrayList<>(), new ArrayList<>());
+        Patient patient = new Patient(null, patientDTO.getName(),patientDTO.getUsername(),patientDTO.getPassword(), patientDTO.getAge(), patientDTO.getSex(), new ArrayList<>(),null ,new ArrayList<>(), new ArrayList<>());
         patientRepository.save(patient);
     }
 
