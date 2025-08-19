@@ -31,7 +31,7 @@ public class ReportController {
     //Mohammed "Add RequistBody And Add Valid
     @PostMapping("/add/patient")
     public ResponseEntity<ApiResponse> addReport(@RequestBody@Valid ReportDTO reportDTO){
-        reportService.addReport(report);
+        reportService.addReport(reportDTO);
         return ResponseEntity.status(200).body(new ApiResponse("Report added successfully !"));
     }
 
@@ -39,7 +39,7 @@ public class ReportController {
     //Mohammed "Add RequistBody And Add Valid
     @PutMapping("/{report_id}")
     public ResponseEntity<ApiResponse> updateReport(@PathVariable Integer report_id,@RequestBody @Valid ReportDTO reportDTO){
-        reportService.updateReport(report_id, report);
+        reportService.updateReport(report_id, reportDTO);
         return ResponseEntity.status(200).body(new ApiResponse("Report updated successfully !"));
     }
 

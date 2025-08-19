@@ -41,8 +41,17 @@ public class ReportService {
         return reports;
     }
 
-    public void addReport(Report report){
-        reportRepository.save(report);
+    public void addReport(ReportDTO report){
+        Patient patient = patientRepository.findPatientById(report.getPatientId());
+        if (patient == null){
+            throw new ApiException("patient not found");
+        }
+        Doctor doctor =doctorRepository.findDoctorById(report.getDoctorId());
+        if (doctor == null){
+            throw new ApiException("doctor not found");
+        }
+        Report newReport = new Report(null, report.getDescription(), report.getReportDate(), patient, doctor);
+        reportRepository.save(newReport);
     }
 
     public void updateReport(Integer id, ReportDTO reportDTO){
