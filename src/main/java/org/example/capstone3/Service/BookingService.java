@@ -25,12 +25,16 @@ public class BookingService {
 
 
     public List<Booking> getAllBookings() {
+        List<Booking> bookings = bookingRepository.findAll();
+        if (bookings.isEmpty()){
+            throw new ApiException("booking not found");
+        }
         return bookingRepository.findAll();
     }
 
-    public void addBooking(Integer patientId,Integer doctorId ) {
-        Patient patient = patientRepository.findPatientById(patientId);
-        Doctor doctor= doctorRepository.findDoctorById(doctorId);
+    public void addBooking(Integer patient_id,Integer doctor_id ) {
+        Patient patient = patientRepository.findPatientById(patient_id);
+        Doctor doctor= doctorRepository.findDoctorById(doctor_id);
         if(patient == null || doctor == null) {
             throw new ApiException("Patient or Doctor is not found");
         }
@@ -39,9 +43,9 @@ public class BookingService {
         bookingRepository.save(booking);
 
     }
-    public void removeBooking(Integer userId,Integer bookingId) {
-        Patient patient = patientRepository.findPatientById(userId);
-        Booking booking=bookingRepository.getBookingById(bookingId);
+    public void removeBooking(Integer patient_id,Integer booking_id) {
+        Patient patient = patientRepository.findPatientById(patient_id);
+        Booking booking=bookingRepository.getBookingById(booking_id);
         if(patient == null || booking == null) {
             throw new ApiException("Patient or Booking is not found");
         }
@@ -49,9 +53,9 @@ public class BookingService {
 
     }
 
-    public void updateBooking(Integer doctorId,Integer bookingId,String status) {
-        Doctor doctor = doctorRepository.findDoctorById(doctorId);
-        Booking booking=bookingRepository.getBookingById(bookingId);
+    public void updateBooking(Integer doctor_id,Integer booking_id,String status) {
+        Doctor doctor = doctorRepository.findDoctorById(doctor_id);
+        Booking booking=bookingRepository.getBookingById(booking_id);
         if(doctor == null) {
             throw new ApiException("Doctor is not found");
         }

@@ -28,8 +28,6 @@ public class PlanService {
         if (patient == null) {
             throw new ApiException("Patient not found");
         }
-        if (patient.getBooking().getStatus().toLowerCase().equalsIgnoreCase("go to plan"))
-            planRepository.save(plan);
 
         throw new ApiException("Plan already exists");
     }
@@ -46,9 +44,8 @@ public class PlanService {
         if (!patient.getPlan().getId().equals(planId)) {
             throw new ApiException("Patient not found");
         }
-        if (patient.getBooking().getStatus().toLowerCase().equalsIgnoreCase("go to plan"))
 
-            plan1.setName(plan.getName());
+
         plan1.setDescription(plan.getDescription());
         planRepository.save(plan1);
     }

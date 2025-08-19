@@ -8,6 +8,7 @@ import org.example.capstone3.Repository.PatientRepository;
 import org.example.capstone3.Repository.QuestionRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 //Mohammed
@@ -16,6 +17,7 @@ import java.util.Set;
 public class QuestionService {
     private final QuestionRepository questionRepository;
     private final PatientRepository patientRepository;
+
 
     public List<Question> getAllQuestions() {
         return questionRepository.findAll();
@@ -48,9 +50,7 @@ public class QuestionService {
         if (patient == null) {
             throw new ApiException("Question or Plan not found");
         }
-        Question question=null;
-        if(patient.getBooking().getStatus().toLowerCase().equalsIgnoreCase("go to plan"))
-        question=new Question(patientId,"","",patient);
+        List<Question> questions = new ArrayList<>();
 
 
     }

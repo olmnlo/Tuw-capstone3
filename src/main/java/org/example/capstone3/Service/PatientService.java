@@ -3,10 +3,14 @@ package org.example.capstone3.Service;
 import lombok.RequiredArgsConstructor;
 import org.example.capstone3.Api.ApiException;
 import org.example.capstone3.DTOin.PatientDTO;
+import org.example.capstone3.Model.Booking;
 import org.example.capstone3.Model.Patient;
+import org.example.capstone3.Model.Plan;
+import org.example.capstone3.Model.Report;
 import org.example.capstone3.Repository.PatientRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -25,7 +29,7 @@ public class PatientService {
 
     //Hussam
     public void addPatient(PatientDTO patientDTO){
-        Patient patient = new Patient(null, patientDTO.getName(),patientDTO.getUsername(),patientDTO.getPassword(), patientDTO.getAge(), patientDTO.getSex(), null, null, null, null);
+        Patient patient = new Patient(null, patientDTO.getName(),patientDTO.getUsername(),patientDTO.getPassword(), patientDTO.getAge(), patientDTO.getSex(), new ArrayList<>(), new Plan(), new ArrayList<>(), new ArrayList<>());
         patientRepository.save(patient);
     }
 
@@ -39,9 +43,9 @@ public class PatientService {
         oldPatient.setName(patient.getName());
         oldPatient.setPassword(patient.getPassword());
         oldPatient.setUsername(patient.getUsername());
-        oldPatient.setBooking(null);
-        oldPatient.setPlan(null);
-        oldPatient.setQuestion(null);
+        oldPatient.setReport(new ArrayList<>());
+        oldPatient.setBooking(new ArrayList<>());
+        oldPatient.setQuestion(new ArrayList<>());
 
         patientRepository.save(oldPatient);
     }
