@@ -59,6 +59,16 @@ public class PlanService {
         if (planRepository.existsPlanByDoctor_IdAndPatient_Id(doctorId, patientId)) {
             throw new ApiException("Patient already has a plan from this doctor");
         }
+        //******************************************************************************
+        //Mohammed fix
+        if (!patient.getBooking().get(patient.getBooking().size() - 1).getStatus().equalsIgnoreCase("go-to-train")
+                || patient.getBooking().get(patient.getBooking().size() - 1).getStatus() == null
+        ) {
+            throw new ApiException("Patient does not have a booking");
+        }
+        //******************************************************************************
+
+
         //Hussam add
         Plan plan = new Plan(
                 null, // Will be set to patientId because of @MapsId
@@ -66,11 +76,14 @@ public class PlanService {
                 planDTO.getDescription(),
                 patient,
                 doctor,
+                new ArrayList<>(),
+                //Mohammed fix
                 new ArrayList<>()
         );
 
         planRepository.save(plan);
     }
+
     //Hussam fix
     public void updatePlan(Integer patientId, Integer planId, PlanDTO planDTO) {
         Plan oldPlan = planRepository.findPlanById(planId);
@@ -88,15 +101,10 @@ public class PlanService {
         //Hussam fix
         oldPlan.setName(planDTO.getName());
         oldPlan.setDescription(planDTO.getDescription());
-        oldPlan.setVideo(new ArrayList<>());
+        //Mohammed fix
+        oldPlan.setDoctorVideo(new ArrayList<>());
         planRepository.save(oldPlan);
     }
-
-
-
-
-
-
 
 
 //    public void deletePlan(Integer doctorID,Integer planId) {
