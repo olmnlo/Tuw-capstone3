@@ -5,9 +5,12 @@ import org.example.capstone3.Api.ApiException;
 import org.example.capstone3.Model.Booking;
 import org.example.capstone3.Model.Doctor;
 import org.example.capstone3.Model.Patient;
+import org.example.capstone3.Model.Schedule;
 import org.example.capstone3.Repository.BookingRepository;
 import org.example.capstone3.Repository.DoctorRepository;
 import org.example.capstone3.Repository.PatientRepository;
+import org.example.capstone3.Repository.ScheduleRepository;
+import org.springframework.data.domain.Limit;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -23,6 +26,7 @@ public class BookingService {
     private final BookingRepository bookingRepository;
     private final PatientRepository patientRepository;
     private final DoctorRepository doctorRepository;
+    private final ScheduleRepository scheduleRepository;
 
     //Hussam some fix
     public List<Booking> getAllBookings() {
@@ -39,10 +43,24 @@ public class BookingService {
         if (patient == null || doctor == null) {
             throw new ApiException("Patient or Doctor is not found");
         }
-        Booking booking = new Booking(null, LocalDateTime.now(), LocalDate.now(), "", "wait", patient, doctor);
-
+        if (!scheduleRepository.existsByDateAndDoctor_Id(LocalDate.now(), doctor_id)) {
+            throw new ApiException("doctor not available today");
+        }
+        List<Booking> bookings = bookingRepository.findBookingByDoctor_Id(doctor_id);
+        Booking bookingPatient = bookingRepository.findBookingByPatient_IdOrderByAppointmentDateDesc(patient_id, Limit.of(1));
+        Booking booking;
+        if (bookingPatient == null) {
+            if (!bookings.isEmpty()) {
+                booking = new Booking(null, bookings.get(bookings.size() - 1).getAppointmentDate().plusMinutes(15), LocalDate.now(), "", "wait", patient, doctor);
+            }else {
+                booking = new Booking(null, LocalDateTime.now().plusMinutes(15), LocalDate.now(), "", "wait", patient, doctor);
+            }
+        } else if (!bookings.isEmpty() && bookingPatient.getStatus().equalsIgnoreCase("done")) {
+            booking = new Booking(null, bookings.get(bookings.size() - 1).getAppointmentDate().plusMinutes(15), LocalDate.now(), "", "wait", patient, doctor);
+        }else {
+            throw new ApiException("you have another booking");
+        }
         bookingRepository.save(booking);
-
     }
     //Hussam some fix
     public void removeBooking(Integer patient_id, Integer booking_id) {
