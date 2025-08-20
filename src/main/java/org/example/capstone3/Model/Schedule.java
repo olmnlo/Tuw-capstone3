@@ -21,7 +21,7 @@ public class Schedule {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @NotNull(message = "Date can't be null")
+
     @Column(columnDefinition = "date not null")
     private LocalDate date;
 

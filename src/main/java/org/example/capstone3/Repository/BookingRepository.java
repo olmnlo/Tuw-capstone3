@@ -1,6 +1,7 @@
 package org.example.capstone3.Repository;
 
 import org.example.capstone3.Model.Booking;
+import org.springframework.data.domain.Limit;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,4 +15,10 @@ public interface BookingRepository extends JpaRepository<Booking, Integer> {
 
     //Mohammed
     List<Booking> findByPatient_Id(Integer patientId);
+
+    List<Booking> findBookingByDoctor_Id(Integer doctorId);
+
+    Booking findBookingByPatient_Id(Integer patientId);
+
+    Booking findBookingByPatient_IdOrderByAppointmentDateDesc(Integer patientId, Limit limit);
 }

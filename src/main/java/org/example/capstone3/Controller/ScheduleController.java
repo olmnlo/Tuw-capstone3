@@ -3,6 +3,7 @@ package org.example.capstone3.Controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.capstone3.Api.ApiResponse;
+import org.example.capstone3.DTOin.ScheduleDTO;
 import org.example.capstone3.Model.Report;
 import org.example.capstone3.Model.Schedule;
 import org.example.capstone3.Service.ReportService;
@@ -25,15 +26,15 @@ public class ScheduleController {
 
 
     @PostMapping
-    public ResponseEntity<?> addSchedule(@RequestBody @Valid Schedule schedule){
-        scheduleService.addSchedule(schedule);
+    public ResponseEntity<?> addSchedule(@RequestBody @Valid ScheduleDTO scheduleDTO){
+        scheduleService.addSchedule(scheduleDTO);
         return ResponseEntity.status(200).body(new ApiResponse("Schedule added successfully !"));
     }
 
     //Hussam: fix added path variable
     @PutMapping("/{schedule_id}")
-    public ResponseEntity<?> updateSchedule(@PathVariable Integer schedule_id, @RequestBody @Valid Schedule schedule){
-        scheduleService.updateSchedule(schedule_id, schedule);
+    public ResponseEntity<?> updateSchedule(@PathVariable Integer schedule_id, @RequestBody @Valid ScheduleDTO scheduleDTO){
+        scheduleService.updateSchedule(schedule_id, scheduleDTO);
         return ResponseEntity.status(200).body(new ApiResponse("Schedule updated successfully !"));
     }
 
