@@ -20,6 +20,7 @@ public class VideoController {
     private final VideoService videoService;
 
 
+    //ENDPOINT 34
     @GetMapping("/{video_id}")
     public ResponseEntity<byte[]> getVideoById(@PathVariable Integer video_id){
         Video video = videoService.getVideo(video_id);
@@ -43,7 +44,6 @@ public class VideoController {
     @PostMapping("/upload/{plan_id}/doctor/{doctor_Id}")
     public ResponseEntity<ApiResponse> uploadVideoForDoctor(@PathVariable Integer doctor_Id ,@PathVariable Integer plan_id, @RequestParam("file") MultipartFile file) throws Exception {
         videoService.saveVideoDoctor(doctor_Id,plan_id,file);
-        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("video uploaded successfully"));
 
-    }
+  
 }

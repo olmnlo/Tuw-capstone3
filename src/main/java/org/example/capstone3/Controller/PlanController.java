@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 public class PlanController {
 
     private final PlanService planService;
+    //ENDPOINT 15
     @GetMapping
     public ResponseEntity<?> getAllPlans(){
         return ResponseEntity.ok().body(planService.getAllPlans());
@@ -23,12 +24,14 @@ public class PlanController {
 
 
     //Hussam: make it small case
+    //ENDPOINT 16
     @PostMapping("/patient/{patient_id}/doctor/{doctor_id}")
     public ResponseEntity<?> addPlan(@PathVariable Integer patient_id, @PathVariable Integer doctor_id,@RequestBody @Valid PlanDTO planDTO){
         planService.addPlan(patient_id, doctor_id ,planDTO);
         return ResponseEntity.ok().body(new ApiResponse("Course added successfully"));
     }
     //Hussam: make it small case
+    //ENDPOINT 17
     @PutMapping("/{plan_id}/doctor/{doctor_id}")
     public ResponseEntity<?> updatePlan(@PathVariable Integer doctor_id,@PathVariable Integer plan_id,@RequestBody @Valid PlanDTO planDTO){
         planService.updatePlan(doctor_id,plan_id, planDTO);
@@ -36,6 +39,7 @@ public class PlanController {
     }
     //Hussam: fixed the missed '}'
     //Hussam: make it small case
+    //ENDPOINT 18
     @DeleteMapping("/{plan_id}/doctor/{doctor_id}")
     public ResponseEntity<?> deletePlan(@PathVariable Integer doctor_id,@PathVariable Integer plan_id){
        planService.deletePlan(doctor_id,plan_id);

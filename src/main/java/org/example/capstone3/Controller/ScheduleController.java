@@ -19,12 +19,14 @@ public class ScheduleController {
 
     private final ScheduleService scheduleService;
 
+    //ENDPOINT 30
     @GetMapping
     public ResponseEntity<?> getAllSchedules(){
         return ResponseEntity.status(200).body(scheduleService.findAllSchedules());
     }
 
 
+    //ENDPOINT 31
     @PostMapping
     public ResponseEntity<?> addSchedule(@RequestBody @Valid ScheduleDTO scheduleDTO){
         scheduleService.addSchedule(scheduleDTO);
@@ -32,6 +34,7 @@ public class ScheduleController {
     }
 
     //Hussam: fix added path variable
+    //ENDPOINT 32
     @PutMapping("/{schedule_id}")
     public ResponseEntity<?> updateSchedule(@PathVariable Integer schedule_id, @RequestBody @Valid ScheduleDTO scheduleDTO){
         scheduleService.updateSchedule(schedule_id, scheduleDTO);
@@ -39,6 +42,7 @@ public class ScheduleController {
     }
 
     //Hussam: fix added path variable
+    //ENDPOINT 33
     @DeleteMapping("/{schedule_id}")
     public ResponseEntity<?> deleteSchedule(@PathVariable Integer schedule_id){
         scheduleService.deleteSchedule(schedule_id);
