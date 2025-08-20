@@ -78,6 +78,7 @@ public class BookingService {
         if(status.equalsIgnoreCase("go-to-plan")){
 
             planRepository.save(plan);
+            System.out.println();
         }
 
         //******************************************************************************************
