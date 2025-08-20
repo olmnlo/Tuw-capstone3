@@ -46,4 +46,6 @@ public class PlanController {
         return ResponseEntity.ok().body(new ApiResponse("plan deleted successfully"));
     }
 
+
+
 }
