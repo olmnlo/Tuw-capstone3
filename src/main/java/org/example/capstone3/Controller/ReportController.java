@@ -21,6 +21,7 @@ public class ReportController {
 
     private final ReportService reportService;
 
+    //ENDPOINT 23
     @GetMapping
     public ResponseEntity<?> getAllReports(){
         return ResponseEntity.status(200).body(reportService.findAllReports());
@@ -29,6 +30,7 @@ public class ReportController {
 
 
     //Mohammed "Add RequistBody And Add Valid
+    //ENDPOINT 24
     @PostMapping("/add/patient")
     public ResponseEntity<ApiResponse> addReport(@RequestBody@Valid ReportDTO reportDTO){
         reportService.addReport(reportDTO);
@@ -37,6 +39,7 @@ public class ReportController {
 
     //Hussam: fix make path variable
     //Mohammed "Add RequistBody And Add Valid
+    //ENDPOINT 25
     @PutMapping("/{report_id}")
     public ResponseEntity<ApiResponse> updateReport(@PathVariable Integer report_id,@RequestBody @Valid ReportDTO reportDTO){
         reportService.updateReport(report_id, reportDTO);
@@ -44,6 +47,7 @@ public class ReportController {
     }
 
     //Hussam: fix make path variable
+    //ENDPOINT 26
     @DeleteMapping("/{report_id}")
     public ResponseEntity<ApiResponse> deleteReport(@PathVariable Integer report_id){
         reportService.deleteReport(report_id);
@@ -52,6 +56,7 @@ public class ReportController {
 
 
     //Mohammed
+    //ENDPOINT 27
     @GetMapping(
             value = "/Patient/{patientId}/Doctor/{doctorId}/pdf",
             produces = MediaType.APPLICATION_PDF_VALUE
@@ -72,12 +77,14 @@ public class ReportController {
   }
 
     // Get all reports for a patient (for physiotherapist view)
+    //ENDPOINT 28
     @GetMapping("/patient/{patientId}/reports")
     public ResponseEntity<List<Report>> getReportsByPatient(@PathVariable Integer patientId) {
         List<Report> reports = reportService.getReportsByPatient(patientId);
         return ResponseEntity.ok(reports);
     }
 
+    //ENDPOINT 29
     @PostMapping("/generate-report-ai/patient/{patient_id}/doctor/{doctor_id}")
     public ResponseEntity<ApiResponse> generateReportAi(@PathVariable Integer patient_id, @PathVariable Integer doctor_id){
         reportService.generateReport(patient_id, doctor_id);

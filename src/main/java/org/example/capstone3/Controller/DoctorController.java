@@ -17,6 +17,7 @@ public class DoctorController {
 
     private final DoctorService doctorService;
 
+    //ENDPOINT 7
     @GetMapping
     public ResponseEntity<?> getAllDoctors(){
         return ResponseEntity.status(200).body(doctorService.findAllDoctors());
@@ -24,6 +25,7 @@ public class DoctorController {
 
 
     //Hussam fix: make it DTO doctor
+    //ENDPOINT 8
     @PostMapping
     public ResponseEntity<ApiResponse> addDoctors(@Valid@RequestBody DoctorDTO doctorDTO){
         doctorService.addDoctor(doctorDTO);
@@ -31,12 +33,14 @@ public class DoctorController {
     }
 
     //Hussam fix: make it DTO doctor
+    //ENDPOINT 9
     @PutMapping("/{doctor_id}")
     public ResponseEntity<ApiResponse> updateDoctors(@PathVariable Integer doctor_id,@Valid@RequestBody  DoctorDTO doctorDTO){
         doctorService.updateDoctor(doctor_id, doctorDTO);
         return ResponseEntity.status(200).body(new ApiResponse("Doctor updated successfully !"));
     }
 
+    //ENDPOINT 10
     @DeleteMapping("/{doctor_id}")
     public ResponseEntity<ApiResponse> deleteDoctors(@PathVariable Integer doctor_id){
         doctorService.deleteDoctor(doctor_id);

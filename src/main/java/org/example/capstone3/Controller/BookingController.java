@@ -21,6 +21,7 @@ public class BookingController {
     }
 
     //Hussam: fix make it small letters and clear
+    //ENDPOINT 3
     @PostMapping("/patient/{patient_id}/doctor/{doctor_id}")
     public ResponseEntity<?> createBooking(@PathVariable Integer patient_id, @PathVariable Integer doctor_id) {
         bookingService.addBooking(patient_id, doctor_id);
@@ -28,6 +29,7 @@ public class BookingController {
     }
 
     //Hussam: fix make it small letters and clear
+    //ENDPOINT 4
     @DeleteMapping("/patient/{patient_id}/booking/{booking_id}")
     public ResponseEntity<?> deleteBooking(@PathVariable Integer patient_id, @PathVariable Integer booking_id) {
         bookingService.removeBooking(patient_id, booking_id);
@@ -35,6 +37,7 @@ public class BookingController {
     }
 
     //Hussam: fix make it small letters and clear
+    //ENDPOINT 5
     @PutMapping("/doctor/{doctor_id}/booking{booking_id}/status")
     public ResponseEntity<?> updateBooking(@PathVariable Integer doctor_id, @PathVariable Integer booking_id, @RequestParam("status") String status) {
         bookingService.updateBooking(doctor_id, booking_id, status);
@@ -42,6 +45,7 @@ public class BookingController {
     }
 
     //Mohammed
+    //ENDPOINT 6
     @GetMapping("/patient/{patientId}/status/{status}/on/{on}/from/{from}/to/{to}")
     public ResponseEntity<?> getPatientBookingsSimple(@PathVariable Integer patientId,
                                                       @PathVariable String status,
