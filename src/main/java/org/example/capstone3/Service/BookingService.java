@@ -5,10 +5,14 @@ import org.example.capstone3.Api.ApiException;
 import org.example.capstone3.Model.Booking;
 import org.example.capstone3.Model.Doctor;
 import org.example.capstone3.Model.Patient;
-import org.example.capstone3.Model.Schedule;
+
+import org.example.capstone3.Model.Plan;
 import org.example.capstone3.Repository.BookingRepository;
 import org.example.capstone3.Repository.DoctorRepository;
 import org.example.capstone3.Repository.PatientRepository;
+import org.example.capstone3.Repository.PlanRepository;
+import org.example.capstone3.Model.Schedule;
+
 import org.example.capstone3.Repository.ScheduleRepository;
 import org.springframework.data.domain.Limit;
 import org.springframework.stereotype.Service;
@@ -26,6 +30,8 @@ public class BookingService {
     private final BookingRepository bookingRepository;
     private final PatientRepository patientRepository;
     private final DoctorRepository doctorRepository;
+    private final PlanRepository planRepository;
+
     private final ScheduleRepository scheduleRepository;
 
     //Hussam some fix
@@ -36,6 +42,7 @@ public class BookingService {
         }
         return bookingRepository.findAll();
     }
+
 
 
     //Hussam some fix
@@ -57,6 +64,7 @@ public class BookingService {
         if (!exists) {
             throw new ApiException("Doctor not available at this time");
         }
+
 
 
         boolean booked = bookingRepository.existsByDoctor_IdAndAppointmentDate(
@@ -113,10 +121,24 @@ public class BookingService {
             throw new ApiException("Booking status is not found");
         }
 
+        //******************************************************************************************
+
+        //Mohammed Add plan automatically to patient
+        //Hussam fix add new Array list
+        Plan  plan=new Plan(null,",,",",,",booking.getPatient(),doctor,new ArrayList<>());
+        if(status.equalsIgnoreCase("go-to-plan")){
+
+            planRepository.save(plan);
+            System.out.println();
+        }
+
+        //******************************************************************************************
+
         booking.setStatus(status);
         bookingRepository.save(booking);
 
     }
+
 
 
     //Mohammed Extra end point

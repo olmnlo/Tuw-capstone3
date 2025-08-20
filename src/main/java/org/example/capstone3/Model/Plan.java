@@ -33,6 +33,9 @@ public class Plan {
     @JsonIgnore
     private Doctor doctor;
 
+
+
+    //Mohammed: add to list first for doctor and second for doctor
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "plan")
     @JsonIgnore
     private List<Video> video;

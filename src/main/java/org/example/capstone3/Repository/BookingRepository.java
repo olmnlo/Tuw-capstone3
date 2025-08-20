@@ -23,5 +23,7 @@ public interface BookingRepository extends JpaRepository<Booking, Integer> {
 
     Booking findBookingByPatient_IdOrderByAppointmentDateDesc(Integer patientId, Limit limit);
 
+
     boolean existsByDoctor_IdAndAppointmentDate(Integer doctorId, LocalDateTime of);
+
 }

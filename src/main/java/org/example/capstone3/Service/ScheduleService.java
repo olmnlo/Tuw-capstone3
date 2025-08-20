@@ -33,6 +33,7 @@ public class ScheduleService {
             throw new ApiException("doctor not found");
         }
 
+
         // reject if same doctor already has a slot at this exact date+time
         boolean conflict = scheduleRepository.existsByDoctor_IdAndDateAndTimeBetween(
                 scheduleDTO.getDoctor(),

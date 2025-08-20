@@ -22,6 +22,7 @@ public class PatientController {
 
     private final PatientService patientService;
     //Hussam
+    //ENDPOINT 11
     @GetMapping
     public ResponseEntity<List<Patient>> getAllPatients(){
         return ResponseEntity.status(HttpStatus.OK).body(patientService.findAllPatient());
@@ -29,6 +30,7 @@ public class PatientController {
 
 
     //Hussam
+    //ENDPOINT 12
     @PostMapping
     public ResponseEntity<ApiResponse> addNewPatient(@Valid@RequestBody PatientDTO patientDTO){
         patientService.addPatient(patientDTO);
@@ -36,7 +38,7 @@ public class PatientController {
     }
 
     //Hussam
-
+    //ENDPOINT 13
     @PutMapping("/{patient_id}")
     public ResponseEntity<ApiResponse> updatePatient(@PathVariable Integer patient_id,@Valid@RequestBody PatientDTO patientDTO){
         patientService.updatePatient(patient_id, patientDTO);
@@ -44,6 +46,7 @@ public class PatientController {
     }
 
     //Hussam
+    //ENDPOINT 14
     @DeleteMapping("/{patient_id}")
     public ResponseEntity<ApiResponse> deletePatient(@PathVariable Integer patient_id){
         patientService.deletePatient(patient_id);

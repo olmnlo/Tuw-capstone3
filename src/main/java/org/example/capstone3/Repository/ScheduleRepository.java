@@ -7,13 +7,16 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+
 import java.time.LocalTime;
 import java.util.List;
+
 
 @Repository
 //Aziz
 public interface ScheduleRepository extends JpaRepository<Schedule, Integer> {
     Schedule findScheduleById(Integer id);
+
 
     boolean existsByDateAndTimeAndDoctor_Id(LocalDate localDate, LocalTime localTime, Integer doctorId);
 
