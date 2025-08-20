@@ -5,6 +5,7 @@ import org.springframework.data.domain.Limit;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 //Mohammed
@@ -21,4 +22,6 @@ public interface BookingRepository extends JpaRepository<Booking, Integer> {
     Booking findBookingByPatient_Id(Integer patientId);
 
     Booking findBookingByPatient_IdOrderByAppointmentDateDesc(Integer patientId, Limit limit);
+
+    boolean existsByDoctor_IdAndAppointmentDate(Integer doctorId, LocalDateTime of);
 }

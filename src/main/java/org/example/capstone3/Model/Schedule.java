@@ -7,6 +7,7 @@ import lombok.*;
 
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 //Hussam fixed
 @NoArgsConstructor
@@ -24,6 +25,9 @@ public class Schedule {
 
     @Column(columnDefinition = "date not null")
     private LocalDate date;
+
+    @Column(columnDefinition = "time not null")
+    private LocalTime time;
 
     @ManyToOne
     @JsonIgnore

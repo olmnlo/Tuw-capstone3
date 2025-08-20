@@ -25,11 +25,11 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+
     @Column(columnDefinition = "TIMESTAMP not null")
+    @JsonFormat(pattern = "yyyy-MM-dd 'T' HH:mm")
     private LocalDateTime appointmentDate;
 
-    @Column(columnDefinition = "date not null")
-    private LocalDate appointmentDay;
 
     @Column(columnDefinition = "text")
     private String description = "";

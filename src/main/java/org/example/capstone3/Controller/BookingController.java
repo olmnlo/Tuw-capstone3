@@ -2,9 +2,15 @@ package org.example.capstone3.Controller;
 
 import lombok.RequiredArgsConstructor;
 import org.example.capstone3.Api.ApiResponse;
+import org.example.capstone3.Model.Schedule;
 import org.example.capstone3.Service.BookingService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.Map;
 
 //Hussam: general fix
 //Mohammed
@@ -21,11 +27,37 @@ public class BookingController {
     }
 
     //Hussam: fix make it small letters and clear
-    @PostMapping("/patient/{patient_id}/doctor/{doctor_id}")
-    public ResponseEntity<?> createBooking(@PathVariable Integer patient_id, @PathVariable Integer doctor_id) {
-        bookingService.addBooking(patient_id, doctor_id);
-        return ResponseEntity.ok().body(new ApiResponse("Booking has been created"));
+
+    //Aziz: matching with booking by time slots
+
+    @PostMapping("/patient/{patientId}/doctor/{doctorId}")
+    public ResponseEntity<?> createBooking(
+            @PathVariable Integer patientId,
+            @PathVariable Integer doctorId,
+            @RequestBody Map<String, String> requestBody) {
+
+        String dateTimeStr = requestBody.get("appointmentDate");
+        LocalDateTime appointmentDate = LocalDateTime.parse(
+                dateTimeStr,
+                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+        );
+
+        bookingService.addBooking(patientId, doctorId, appointmentDate);
+        return ResponseEntity.ok(new ApiResponse("Booking has been created"));
     }
+
+    @GetMapping("/doctor/{doctorId}/available-slots")
+    public ResponseEntity<?> getAvailableSlots(@PathVariable Integer doctorId) {
+        List<Schedule> slots = bookingService.getAvailableSlots(doctorId);
+        return ResponseEntity.ok(slots);
+    }
+
+
+//    @PostMapping("/patient/{patient_id}")
+//    public ResponseEntity<?> createBooking(@PathVariable Integer patient_id) {
+//        bookingService.addBooking(patient_id);
+//        return ResponseEntity.ok().body(new ApiResponse("Booking has been created"));
+//    }
 
     //Hussam: fix make it small letters and clear
     @DeleteMapping("/patient/{patient_id}/booking/{booking_id}")
