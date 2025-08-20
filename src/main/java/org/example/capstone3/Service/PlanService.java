@@ -92,6 +92,13 @@ public class PlanService {
         planRepository.save(oldPlan);
     }
 
+
+
+
+
+
+
+
 //    public void deletePlan(Integer doctorID,Integer planId) {
 //        Plan plan = planRepository.findPlanById(planId);
 //        if (plan == null) {

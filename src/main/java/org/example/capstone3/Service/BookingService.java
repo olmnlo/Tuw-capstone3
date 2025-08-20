@@ -5,9 +5,11 @@ import org.example.capstone3.Api.ApiException;
 import org.example.capstone3.Model.Booking;
 import org.example.capstone3.Model.Doctor;
 import org.example.capstone3.Model.Patient;
+import org.example.capstone3.Model.Plan;
 import org.example.capstone3.Repository.BookingRepository;
 import org.example.capstone3.Repository.DoctorRepository;
 import org.example.capstone3.Repository.PatientRepository;
+import org.example.capstone3.Repository.PlanRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -23,6 +25,7 @@ public class BookingService {
     private final BookingRepository bookingRepository;
     private final PatientRepository patientRepository;
     private final DoctorRepository doctorRepository;
+    private final PlanRepository planRepository;
 
     //Hussam some fix
     public List<Booking> getAllBookings() {
@@ -68,10 +71,22 @@ public class BookingService {
             throw new ApiException("Booking status is not found");
         }
 
+        //******************************************************************************************
+
+        //Mohammed Add plan automatically to patient
+        Plan  plan=new Plan(null,",,",",,",booking.getPatient(),doctor,new ArrayList<>());
+        if(status.equalsIgnoreCase("go-to-plan")){
+
+            planRepository.save(plan);
+        }
+
+        //******************************************************************************************
+
         booking.setStatus(status);
         bookingRepository.save(booking);
 
     }
+
 
 
     //Mohammed Extra end point
