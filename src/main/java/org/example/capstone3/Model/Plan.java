@@ -36,14 +36,9 @@ public class Plan {
 
 
     //Mohammed: add to list first for doctor and second for doctor
-
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "plan")
     @JsonIgnore
-    private List<Video> doctorVideo;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "plan")
-    @JsonIgnore
-    private List<Video> patientVideo;
+    private List<Video> video;
 
 
 }

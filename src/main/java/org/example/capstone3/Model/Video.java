@@ -21,6 +21,8 @@ public class Video {
     private String fileName;
     private String contentType;
 
+    private String videoType;
+
     @Lob
     @Column(columnDefinition = "LONGBLOB")
     private byte[] data;
