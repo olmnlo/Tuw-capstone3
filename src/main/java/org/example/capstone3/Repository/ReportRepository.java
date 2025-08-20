@@ -10,4 +10,6 @@ import java.util.List;
 public interface ReportRepository extends JpaRepository<Report, Integer> {
     Report findReportById(Integer id);
     List<Report> findByPatientId(Integer patientId);
+//Hussam fixed
+    Report findReportByPatient_IdAndDoctor_Id(Integer patientId, Integer doctorId);
 }

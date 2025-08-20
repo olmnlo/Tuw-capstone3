@@ -4,12 +4,14 @@ import lombok.RequiredArgsConstructor;
 import org.example.capstone3.Api.ApiResponse;
 import org.example.capstone3.Model.Video;
 import org.example.capstone3.Service.VideoService;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-//Hussam
+//Hussam created
 @RestController
 @RequestMapping("/api/v1/video")
 @RequiredArgsConstructor
@@ -19,8 +21,13 @@ public class VideoController {
 
 
     @GetMapping("/{video_id}")
-    public ResponseEntity<Video> getVideoById(@PathVariable Integer video_id){
-        return ResponseEntity.status(HttpStatus.OK).body(videoService.getVideo(video_id));
+    public ResponseEntity<byte[]> getVideoById(@PathVariable Integer video_id){
+        Video video = videoService.getVideo(video_id);
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.valueOf(video.getContentType()))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + video.getFileName() + "\"")
+                .body(video.getData());
     }
 
 

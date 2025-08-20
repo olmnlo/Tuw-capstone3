@@ -41,12 +41,5 @@ public class PlanController {
        planService.deletePlan(doctor_id,plan_id);
         return ResponseEntity.ok().body(new ApiResponse("plan deleted successfully"));
     }
-//    //Hussam: make it small case
-    //Hussam : removed not necessary endpoint
-//    @PutMapping("/{plan_id}/assign/{patient_id}")
-//    public ResponseEntity<?> assignPlanToPatient(@PathVariable Integer plan_id, @PathVariable Integer patient_id) {
-//        planService.assignPatientToPlan(plan_id, patient_id);
-//        return ResponseEntity.status(200).body(new ApiResponse("Successfully assigned plan to patient"));
-//    }
 
 }

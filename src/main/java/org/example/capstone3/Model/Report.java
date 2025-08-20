@@ -10,7 +10,7 @@ import lombok.*;
 
 import java.time.LocalDate;
 
-
+//Hussam fixed
 @NoArgsConstructor
 @Entity
 @Getter
@@ -30,9 +30,11 @@ public class Report {
     private LocalDate reportDate;
 
     @ManyToOne
+    @JsonIgnore
     private Patient patient;
 
     @ManyToOne
+    @JsonIgnore
     private Doctor doctor;
 
 

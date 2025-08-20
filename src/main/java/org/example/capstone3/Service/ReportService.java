@@ -85,10 +85,11 @@ public class ReportService {
     }
 
 
+    //Hussam fix
     //Mohammed
     @Transactional  // أو @Transactional(readOnly = true)
-    public byte[] generatePdfReport(Integer patientId, Integer doctorId, Integer reportId){
-        Report report = reportRepository.findReportById(reportId);
+    public byte[] generatePdfReport(Integer patientId, Integer doctorId){
+        Report report = reportRepository.findReportByPatient_IdAndDoctor_Id(patientId, doctorId);
         if (report == null) throw new ApiException("report not found!");
 
         if (report.getPatient() == null || report.getDoctor() == null
@@ -100,10 +101,10 @@ public class ReportService {
         return reportPdfService.generate(report);
     }
 
-
-    public Report generateReport(Integer patientId) {
+    //Hussam make it void
+    public void generateReport(Integer patientId, Integer doctor_id) {
         // 6. Save
-        return reportRepository.save(openAiConnect.generateReport(patientId));
+        reportRepository.save(openAiConnect.generateReport(patientId, doctor_id));
     }
 
 
