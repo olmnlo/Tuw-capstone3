@@ -2,6 +2,7 @@ package org.example.capstone3.Controller;
 
 import lombok.RequiredArgsConstructor;
 import org.example.capstone3.Api.ApiResponse;
+import org.example.capstone3.DTOout.VideoDTOout;
 import org.example.capstone3.Model.Video;
 import org.example.capstone3.Service.VideoService;
 import org.springframework.http.HttpHeaders;
@@ -10,6 +11,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 //Hussam created
 @RestController
@@ -46,6 +49,17 @@ public class VideoController {
         videoService.saveVideoDoctor(doctor_Id, plan_id, file);
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("video uploaded successfully"));
     }
+
+    @GetMapping("/data/{doctor_id}/plan/{plan_id}/video/{video_type}")
+    public ResponseEntity<List<VideoDTOout>> getVideoData(@PathVariable String video_type,@PathVariable Integer plan_id,@PathVariable Integer doctor_id){
+        return ResponseEntity.status(HttpStatus.OK).body(videoService.getVideosData(video_type,plan_id,doctor_id));
+    }
+
+    @GetMapping
+    public ResponseEntity<?> getVideoData(){
+        return ResponseEntity.status(HttpStatus.OK).body(videoService.get());
+    }
+
 
 
     //mm

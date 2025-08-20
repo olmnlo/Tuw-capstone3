@@ -76,8 +76,6 @@ public class PlanService {
                 planDTO.getDescription(),
                 patient,
                 doctor,
-                new ArrayList<>(),
-                //Mohammed fix
                 new ArrayList<>()
         );
 
@@ -102,7 +100,7 @@ public class PlanService {
         oldPlan.setName(planDTO.getName());
         oldPlan.setDescription(planDTO.getDescription());
         //Mohammed fix
-        oldPlan.setDoctorVideo(new ArrayList<>());
+        oldPlan.setVideo(new ArrayList<>());
         planRepository.save(oldPlan);
     }
 

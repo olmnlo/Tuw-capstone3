@@ -93,6 +93,7 @@ public class BookingService {
         //******************************************************************************************
 
         //Mohammed Add plan automatically to patient
+        //Hussam fix add new Array list
         Plan  plan=new Plan(null,",,",",,",booking.getPatient(),doctor,new ArrayList<>());
         if(status.equalsIgnoreCase("go-to-plan")){
 
