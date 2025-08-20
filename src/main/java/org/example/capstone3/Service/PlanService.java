@@ -82,6 +82,7 @@ public class PlanService {
         planRepository.save(plan);
     }
 
+
     //Hussam fix
     public void updatePlan(Integer patientId, Integer planId, PlanDTO planDTO) {
         Plan oldPlan = planRepository.findPlanById(planId);

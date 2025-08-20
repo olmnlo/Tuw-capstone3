@@ -32,10 +32,26 @@ public class ScheduleService {
         if (doctor == null){
             throw new ApiException("doctor not found");
         }
-        if (scheduleRepository.existsByDateAndDoctor_Id(scheduleDTO.getDate(), scheduleDTO.getDoctor())){
-            throw new ApiException("doctor is assigned with this date");
+
+
+        // reject if same doctor already has a slot at this exact date+time
+        boolean conflict = scheduleRepository.existsByDoctor_IdAndDateAndTimeBetween(
+                scheduleDTO.getDoctor(),
+                scheduleDTO.getDate(),
+                scheduleDTO.getTime().minusMinutes(9), // prevent overlap within 10 minutes
+                scheduleDTO.getTime().plusMinutes(9)
+        );
+
+        if (conflict) {
+            throw new ApiException("Doctor already has a slot within 10 minutes");
         }
-        Schedule schedule = new Schedule(null, scheduleDTO.getDate(),doctor);
+
+        Schedule schedule = new Schedule(
+                null,
+                scheduleDTO.getDate(),
+                scheduleDTO.getTime(),
+                doctor
+        );
         scheduleRepository.save(schedule);
     }
 

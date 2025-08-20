@@ -12,6 +12,7 @@ import org.example.capstone3.Repository.DoctorRepository;
 import org.example.capstone3.Repository.PatientRepository;
 import org.example.capstone3.Repository.PlanRepository;
 import org.example.capstone3.Model.Schedule;
+
 import org.example.capstone3.Repository.ScheduleRepository;
 import org.springframework.data.domain.Limit;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,7 @@ public class BookingService {
     private final PatientRepository patientRepository;
     private final DoctorRepository doctorRepository;
     private final PlanRepository planRepository;
+
     private final ScheduleRepository scheduleRepository;
 
     //Hussam some fix
@@ -40,32 +42,61 @@ public class BookingService {
         }
         return bookingRepository.findAll();
     }
+
+
+
     //Hussam some fix
-    public void addBooking(Integer patient_id, Integer doctor_id) {
-        Patient patient = patientRepository.findPatientById(patient_id);
-        Doctor doctor = doctorRepository.findDoctorById(doctor_id);
+    //Aziz - Booking made by time slots
+    public void addBooking(Integer patientId, Integer doctorId, LocalDateTime appointmentDate) {
+
+        Patient patient = patientRepository.findPatientById(patientId);
+        Doctor doctor = doctorRepository.findDoctorById(doctorId);
         if (patient == null || doctor == null) {
-            throw new ApiException("Patient or Doctor is not found");
+            throw new ApiException("Patient or Doctor not found");
         }
-        if (!scheduleRepository.existsByDateAndDoctor_Id(LocalDate.now(), doctor_id)) {
-            throw new ApiException("doctor not available today");
+
+        // 2. check if this slot exists in schedule
+        boolean exists = scheduleRepository.existsByDateAndTimeAndDoctor_Id(
+                appointmentDate.toLocalDate(),
+                appointmentDate.toLocalTime(),
+                doctorId
+        );
+        if (!exists) {
+            throw new ApiException("Doctor not available at this time");
         }
-        List<Booking> bookings = bookingRepository.findBookingByDoctor_Id(doctor_id);
-        Booking bookingPatient = bookingRepository.findBookingByPatient_IdOrderByAppointmentDateDesc(patient_id, Limit.of(1));
-        Booking booking;
-        if (bookingPatient == null) {
-            if (!bookings.isEmpty()) {
-                booking = new Booking(null, bookings.get(bookings.size() - 1).getAppointmentDate().plusMinutes(15), LocalDate.now(), "", "wait", patient, doctor);
-            }else {
-                booking = new Booking(null, LocalDateTime.now().plusMinutes(15), LocalDate.now(), "", "wait", patient, doctor);
-            }
-        } else if (!bookings.isEmpty() && bookingPatient.getStatus().equalsIgnoreCase("done")) {
-            booking = new Booking(null, bookings.get(bookings.size() - 1).getAppointmentDate().plusMinutes(15), LocalDate.now(), "", "wait", patient, doctor);
-        }else {
-            throw new ApiException("you have another booking");
+
+
+
+        boolean booked = bookingRepository.existsByDoctor_IdAndAppointmentDate(
+                doctorId,
+                appointmentDate
+        );
+        if (booked) {
+            throw new ApiException("This slot is already booked");
         }
+
+        //  check if patient already has active booking
+        Booking lastBooking = bookingRepository
+                .findBookingByPatient_IdOrderByAppointmentDateDesc(patientId, Limit.of(1));
+        if (lastBooking != null && !lastBooking.getStatus().equalsIgnoreCase("done")) {
+            throw new ApiException("You already have another booking");
+        }
+
+        //  create booking
+        Booking booking = new Booking(
+                null,
+                appointmentDate,
+                "",
+                "wait",
+                patient,
+                doctor
+        );
+
         bookingRepository.save(booking);
     }
+
+
+
     //Hussam some fix
     public void removeBooking(Integer patient_id, Integer booking_id) {
         Patient patient = patientRepository.findPatientById(patient_id);
@@ -142,7 +173,8 @@ public class BookingService {
             }
 
             // فلتر التاريخ
-            LocalDate day = b.getAppointmentDay();
+            LocalDate day = (b.getAppointmentDate() != null) ? b.getAppointmentDate().toLocalDate() : null;
+
             if (onDate != null) {
                 if (day == null || !day.equals(onDate)) continue;
             } else {
@@ -170,4 +202,25 @@ public class BookingService {
         }
 
     }
+
+    //Aziz
+    public List<Schedule> getAvailableSlots(Integer doctorId) {
+        // 1. get all schedule slots for doctor
+        List<Schedule> slots = scheduleRepository.findByDoctor_Id(doctorId);
+
+        // 2. get all bookings for doctor
+        List<Booking> bookings = bookingRepository.findBookingByDoctor_Id(doctorId);
+
+        // 3. filter out booked ones
+        return slots.stream()
+                .filter(slot -> bookings.stream()
+                        .noneMatch(b ->
+                                b.getAppointmentDate().toLocalDate().equals(slot.getDate()) &&
+                                        b.getAppointmentDate().toLocalTime().equals(slot.getTime())
+                        )
+                )
+                .toList();
+    }
+
+
 }

@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
+
 //Hussam created
 @RestController
 @RequestMapping("/api/v1/video")
@@ -25,6 +26,7 @@ public class VideoController {
 
     //ENDPOINT 34
     @GetMapping("/{video_id}")
+
     public ResponseEntity<byte[]> getVideoById(@PathVariable Integer video_id) {
         Video video = videoService.getVideo(video_id);
 

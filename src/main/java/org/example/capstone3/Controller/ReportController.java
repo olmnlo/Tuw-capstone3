@@ -85,6 +85,7 @@ public class ReportController {
     }
 
     //ENDPOINT 29
+
     @PostMapping("/generate-report-ai/patient/{patient_id}/doctor/{doctor_id}")
     public ResponseEntity<ApiResponse> generateReportAi(@PathVariable Integer patient_id, @PathVariable Integer doctor_id){
         reportService.generateReport(patient_id, doctor_id);
