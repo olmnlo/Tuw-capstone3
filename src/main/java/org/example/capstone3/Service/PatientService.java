@@ -29,7 +29,8 @@ public class PatientService {
 
     //Hussam
     public void addPatient(PatientDTO patientDTO){
-        Patient patient = new Patient(null, patientDTO.getName(),patientDTO.getUsername(),patientDTO.getPassword(), patientDTO.getAge(), patientDTO.getSex(), new ArrayList<>(),null ,new ArrayList<>(), new ArrayList<>());
+        //Mohammed add Email
+        Patient patient = new Patient(null, patientDTO.getName(),patientDTO.getUsername(),patientDTO.getPassword(), patientDTO.getAge(), patientDTO.getSex(), "alshmhani.x@gmail.com",new ArrayList<>(),null ,new ArrayList<>(), new ArrayList<>());
         patientRepository.save(patient);
     }
 
@@ -45,6 +46,8 @@ public class PatientService {
         oldPatient.setUsername(patient.getUsername());
         oldPatient.setReport(new ArrayList<>());
         oldPatient.setBooking(new ArrayList<>());
+        //Mohammed add
+        oldPatient.setEmail(patient.getEmail());
         oldPatient.setAnswers(new ArrayList<>());
 
         patientRepository.save(oldPatient);

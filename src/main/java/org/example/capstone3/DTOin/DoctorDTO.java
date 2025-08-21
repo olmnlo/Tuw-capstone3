@@ -37,4 +37,9 @@ public class DoctorDTO {
     @Pattern(regexp = "^(male|female)$", message = "sex must be either male or female")
     private String sex;
 
+
+    //Mohammed Add
+    @Email(message = "Email must be in valid form")
+    private String email;
+
 }

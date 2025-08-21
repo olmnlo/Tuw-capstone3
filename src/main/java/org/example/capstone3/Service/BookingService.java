@@ -1,5 +1,6 @@
 package org.example.capstone3.Service;
 
+import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.example.capstone3.Api.ApiException;
 import org.example.capstone3.Model.Booking;
@@ -33,6 +34,10 @@ public class BookingService {
     private final PlanRepository planRepository;
 
     private final ScheduleRepository scheduleRepository;
+
+    //Mohammed Add
+    private final EmailService emailService;
+
 
     //Hussam some fix
     public List<Booking> getAllBookings() {
@@ -108,7 +113,7 @@ public class BookingService {
 
     }
     //Hussam some fix
-    public void updateBooking(Integer doctor_id, Integer booking_id, String status) {
+    public void updateBooking(Integer doctor_id, Integer booking_id, String status) throws MessagingException {
         Doctor doctor = doctorRepository.findDoctorById(doctor_id);
         Booking booking = bookingRepository.getBookingById(booking_id);
         if (doctor == null) {
@@ -119,6 +124,12 @@ public class BookingService {
         }
         if (!status.equals("wait") && !status.equals("go-to-hospital") && !status.equals("go-to-plan") && !status.equals("done")) {
             throw new ApiException("Booking status is not found");
+        }
+
+        //Mohammed Add
+
+        if(status.equalsIgnoreCase("go-to-hospital")) {
+            emailService.sendHospitalInstructionEmail(booking.getPatient().getEmail());
         }
 
         //******************************************************************************************
