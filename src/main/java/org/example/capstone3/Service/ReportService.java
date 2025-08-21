@@ -1,7 +1,9 @@
 package org.example.capstone3.Service;
+import jakarta.mail.MessagingException;
 import jakarta.transaction.Transactional;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.RequiredArgsConstructor;
+import org.example.capstone3.Api.ApiResponse;
 import org.example.capstone3.DTOin.ReportDTO;
 import org.springframework.beans.factory.annotation.Value;
 import org.example.capstone3.Api.ApiException;
@@ -26,9 +28,10 @@ public class ReportService {
     private final ReportRepository reportRepository;
     private final ReportPdfService reportPdfService;
     private final OpenAiConnect openAiConnect;
-
     private final PatientRepository patientRepository;
     private final DoctorRepository doctorRepository;
+
+    private final EmailService emailService;
 
 
 
@@ -110,5 +113,20 @@ public class ReportService {
 
     public List<Report> getReportsByPatient(Integer patientId) {
         return reportRepository.findByPatientId(patientId);
+    }
+
+    //Mohammed
+    public ApiResponse sendPdfReportToPatient(Integer patient_id, Integer doctor_id){
+        Patient patient = patientRepository.findPatientById(patient_id);
+        if (patient == null) {
+            throw new ApiException("Patient not found");
+        }
+
+        try {
+            emailService.sendPatientReportEmail(patient.getEmail(), patient.getName(), patient_id,doctor_id);
+            return new ApiResponse("Report sent successfully to " + patient.getEmail());
+        } catch (MessagingException e) {
+            throw new RuntimeException("Failed to send report email", e);
+        }
     }
 }
