@@ -1,5 +1,6 @@
 package org.example.capstone3.Service;
 
+import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.example.capstone3.Api.ApiException;
 import org.example.capstone3.DTOin.DoctorDTO;
@@ -18,6 +19,9 @@ import java.util.List;
 public class DoctorService {
     private final DoctorRepository doctorRepository;
 
+    //Mohammed
+    private final EmailService emailService;
+
     public List<Doctor> findAllDoctors(){
         List<Doctor> doctors = doctorRepository.findAll();
         if (doctors.isEmpty()){
@@ -28,8 +32,16 @@ public class DoctorService {
 
     //Hussam some fix
     public void addDoctor(DoctorDTO doctorDTO){
-        Doctor doctor = new Doctor(null, doctorDTO.getUsername(),doctorDTO.getPassword(),doctorDTO.getName(),doctorDTO.getAge(),doctorDTO.getSex(),"alshmhani.x@gmail.com",null,null,null);
+        Doctor doctor = new Doctor(null, doctorDTO.getUsername(),doctorDTO.getPassword(),doctorDTO.getName(),doctorDTO.getAge(),doctorDTO.getSex(), doctorDTO.getEmail(), null,null,null);
         doctorRepository.save(doctor);
+
+        //Mohammed
+
+        try {
+            emailService.sendWelcomeDoctorEmail(doctor.getEmail(), doctor.getName());
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     //Hussam some fix
@@ -47,6 +59,13 @@ public class DoctorService {
         oldDoctor.setSex(doctorDTO.getSex());
 
         doctorRepository.save(oldDoctor);
+
+        //Mohammed
+        try {
+            emailService.sendDoctorProfileUpdatedEmail(oldDoctor.getEmail(), oldDoctor.getName());
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void deleteDoctor(Integer id){
