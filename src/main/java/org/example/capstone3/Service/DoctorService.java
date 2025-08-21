@@ -26,7 +26,7 @@ public class DoctorService {
 
     //Hussam some fix
     public void addDoctor(DoctorDTO doctorDTO){
-        Doctor doctor = new Doctor(null, doctorDTO.getUsername(),doctorDTO.getPassword(),doctorDTO.getName(),doctorDTO.getAge(),doctorDTO.getSex(),null,null,null);
+        Doctor doctor = new Doctor(null, doctorDTO.getUsername(),doctorDTO.getPassword(),doctorDTO.getName(),doctorDTO.getAge(),doctorDTO.getSex(),"alshmhani.x@gmail.com",null,null,null);
         doctorRepository.save(doctor);
     }
 
