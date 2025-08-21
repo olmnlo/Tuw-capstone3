@@ -41,6 +41,8 @@ public class Patient {
     private String sex;
 
     //Mohammed add
+    //Hussam fix add @Column
+    @Column(columnDefinition = "varchar(30) unique not null")
     private String email;
 
 

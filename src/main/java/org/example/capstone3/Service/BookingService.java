@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
 import java.util.*;
 
@@ -59,6 +60,10 @@ public class BookingService {
         if (patient == null || doctor == null) {
             throw new ApiException("Patient or Doctor not found");
         }
+        Schedule schedule = scheduleRepository.findByDateAndTimeAndDoctor_Id(appointmentDate.toLocalDate(), appointmentDate.toLocalTime(), doctorId);
+        if (schedule == null){
+            throw new ApiException("schedule not found");
+        }
 
         // 2. check if this slot exists in schedule
         boolean exists = scheduleRepository.existsByDateAndTimeAndDoctor_Id(
@@ -72,10 +77,8 @@ public class BookingService {
 
 
 
-        boolean booked = bookingRepository.existsByDoctor_IdAndAppointmentDate(
-                doctorId,
-                appointmentDate
-        );
+        // 2. Check if schedule is already booked
+        boolean booked = bookingRepository.existsBySchedule(schedule);
         if (booked) {
             throw new ApiException("This slot is already booked");
         }
@@ -94,8 +97,9 @@ public class BookingService {
                 "",
                 "wait",
                 patient,
-                doctor
-        );
+                doctor,
+                schedule
+                );
 
         bookingRepository.save(booking);
     }
@@ -136,7 +140,7 @@ public class BookingService {
 
         //Mohammed Add plan automatically to patient
         //Hussam fix add new Array list
-        Plan  plan=new Plan(null,",,",",,",booking.getPatient(),doctor,new ArrayList<>());
+        Plan  plan=new Plan(null,"","",booking.getPatient(),doctor,new ArrayList<>());
         if(status.equalsIgnoreCase("go-to-plan")){
 
             planRepository.save(plan);
@@ -231,6 +235,53 @@ public class BookingService {
                         )
                 )
                 .toList();
+    }
+
+//    public void takeFastestBooking(Integer patient_id){
+//        Patient patient = patientRepository.findPatientById(patient_id);
+//        if (patient == null){
+//            throw new ApiException("patient not found");
+//        }
+//        List<Schedule> schedules = scheduleRepository.findUpcomingSchedules(LocalDate.now(), LocalTime.now());
+//        for (Schedule schedule : schedules) {
+//            LocalDateTime scheduleDateTime = LocalDateTime.of(schedule.getDate(), schedule.getTime());
+//            boolean doctorBusy = bookingRepository.existsByDoctor_IdAndAppointmentDateAfter(
+//                    schedule.getDoctor().getId(),
+//                    LocalDateTime.now()
+//            );
+//            if (!doctorBusy) {
+//                Booking booking = new Booking(null, scheduleDateTime, "", "wait", patient, schedule.getDoctor());
+//                bookingRepository.save(booking);
+//                return;
+//            }
+//        }
+//
+//    }
+    public void takeFastestBooking(Integer patientId) {
+        Patient patient = patientRepository.findPatientById(patientId);
+        if (patient == null) {
+            throw new ApiException("Patient not found");
+        }
+
+        List<Schedule> schedules = scheduleRepository.findUpcomingSchedules(LocalDate.now(), LocalTime.now());
+
+        for (Schedule schedule : schedules) {
+            LocalDateTime scheduleDateTime = LocalDateTime.of(schedule.getDate(), schedule.getTime());
+
+            // Check if doctor already has a booking exactly at this schedule
+            boolean doctorBusy = bookingRepository.existsByDoctor_IdAndAppointmentDate(
+                    schedule.getDoctor().getId(),
+                    scheduleDateTime
+            );
+
+            if (!doctorBusy) {
+                Booking booking = new Booking(null, scheduleDateTime, "", "wait", patient, schedule.getDoctor(), schedule);
+                bookingRepository.save(booking);
+                return;
+            }
+        }
+
+        throw new ApiException("No available schedule found for booking");
     }
 
 

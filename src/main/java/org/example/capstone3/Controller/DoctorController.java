@@ -4,10 +4,15 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.capstone3.Api.ApiResponse;
 import org.example.capstone3.DTOin.DoctorDTO;
+import org.example.capstone3.DTOout.DoctorDTOout;
 import org.example.capstone3.Model.Doctor;
 import org.example.capstone3.Service.DoctorService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
 //Hussam general fix
 @RestController
 @RequestMapping("/api/v1/doctor")
@@ -45,6 +50,12 @@ public class DoctorController {
     public ResponseEntity<ApiResponse> deleteDoctors(@PathVariable Integer doctor_id){
         doctorService.deleteDoctor(doctor_id);
         return ResponseEntity.status(200).body(new ApiResponse("Doctor deleted successfully !"));
+    }
+
+    //Hussam
+    @GetMapping("/{key}")
+    public ResponseEntity<List<DoctorDTOout>> findDoctorByNameContains(@PathVariable String key){
+        return ResponseEntity.status(HttpStatus.OK).body(doctorService.searchDoctorByNameContains(key));
     }
 
 }

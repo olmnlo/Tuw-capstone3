@@ -46,4 +46,8 @@ public class Booking {
     @JsonIgnore
     private Doctor doctor;
 
+    @ManyToOne
+    @JsonIgnore
+    private Schedule schedule;
+
 }
