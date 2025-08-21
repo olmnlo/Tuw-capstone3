@@ -46,14 +46,14 @@ public class VideoService {
             throw new ApiException("plan not found");
         }
 
-//        try {
-//            boolean clean = virusScanService.isFileClean(file.getBytes(), file.getOriginalFilename());
-//            if (!clean) {
-//                throw new ApiException("file not clean");
-//            }
-//        } catch (Exception e) {
-//            throw new ApiException("error process file scan");
-//        }
+        try {
+            boolean clean = virusScanService.isFileClean(file.getBytes(), file.getOriginalFilename());
+            if (!clean) {
+                throw new ApiException("file not clean");
+            }
+        } catch (Exception e) {
+            throw new ApiException("error process file scan");
+        }
         //-------------------------------------------------------------
         File dir = new File(uploadDir);
         if (!dir.exists()) {
@@ -82,14 +82,14 @@ public class VideoService {
         if (plan == null){
             throw new ApiException("plan not found");
         }
-//        try {
-//            boolean clean = virusScanService.isFileClean(file.getBytes(), file.getOriginalFilename());
-//            if (!clean) {
-//                throw new ApiException("file not clean");
-//            }
-//        } catch (Exception e) {
-//            throw new ApiException("error process file scan");
-//        }
+        try {
+            boolean clean = virusScanService.isFileClean(file.getBytes(), file.getOriginalFilename());
+            if (!clean) {
+                throw new ApiException("file not clean");
+            }
+        } catch (Exception e) {
+            throw new ApiException("error process file scan");
+        }
 
         //-------------------------------------------------------------
         File dir = new File(uploadDir);
