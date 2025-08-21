@@ -1,5 +1,6 @@
-package org.example.capstone3.DTOout;
+package org.example.capstone3.DTOin;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -7,12 +8,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class VideoDTOout {
-
-    private Integer id;
-    private String fileName;
-    private String contentType;
-    private String videoType;
+public class VideoDTOin {
+    @NotNull(message = "description is required")
     private String description;
+
     private String youtubeLink;
 }

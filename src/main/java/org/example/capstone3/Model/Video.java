@@ -23,9 +23,12 @@ public class Video {
 
     private String videoType;
 
-    @Lob
-    @Column(columnDefinition = "LONGBLOB")
-    private byte[] data;
+    private String description;
+
+    private String youtubeLink;
+
+
+    private String filePath;
 
     @ManyToOne
     @JsonIgnore
