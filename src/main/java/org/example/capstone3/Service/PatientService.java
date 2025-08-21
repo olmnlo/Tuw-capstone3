@@ -90,5 +90,19 @@ public class PatientService {
         patientRepository.delete(oldPatient);
     }
 
+    //Mohammed
+    public ApiResponse sendPdfReportToPatient(Integer patient_id, Integer doctor_id){
+        Patient patient = patientRepository.findPatientById(patient_id);
+        if (patient == null) {
+            throw new ApiException("Patient not found");
+        }
+
+        try {
+            emailService.sendPatientReportEmail(patient.getEmail(), patient.getName(), patient_id,doctor_id);
+            return new ApiResponse("Report sent successfully to " + patient.getEmail());
+        } catch (MessagingException e) {
+            throw new RuntimeException("Failed to send report email", e);
+        }
+    }
 
 }

@@ -92,15 +92,6 @@ public class ReportController {
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("report generated successfully"));
     }
 
-    //Mohammed
-    //hussam fix : change the place from patient controller to report controller and make it post not get
-    @PostMapping("/patient/{patient_id}/doctor/{doctor_id}")
-    public ResponseEntity<ApiResponse> sendPdfReportToPatient(
-            @PathVariable Integer patient_id,
-            @PathVariable Integer doctor_id) {
-        ApiResponse response = reportService.sendPdfReportToPatient(patient_id, doctor_id);
-        return ResponseEntity.ok(response);
-    }
     
 
 }

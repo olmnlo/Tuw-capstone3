@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import lombok.RequiredArgsConstructor;
 import org.example.capstone3.Api.ApiResponse;
 import org.example.capstone3.DTOin.ReportDTO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.example.capstone3.Api.ApiException;
 import org.example.capstone3.Model.Doctor;
@@ -13,6 +14,7 @@ import org.example.capstone3.Model.Report;
 import org.example.capstone3.Repository.DoctorRepository;
 import org.example.capstone3.Repository.PatientRepository;
 import org.example.capstone3.Repository.ReportRepository;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -31,7 +33,6 @@ public class ReportService {
     private final PatientRepository patientRepository;
     private final DoctorRepository doctorRepository;
 
-    private final EmailService emailService;
 
 
 
@@ -115,18 +116,4 @@ public class ReportService {
         return reportRepository.findByPatientId(patientId);
     }
 
-    //Mohammed
-    public ApiResponse sendPdfReportToPatient(Integer patient_id, Integer doctor_id){
-        Patient patient = patientRepository.findPatientById(patient_id);
-        if (patient == null) {
-            throw new ApiException("Patient not found");
-        }
-
-        try {
-            emailService.sendPatientReportEmail(patient.getEmail(), patient.getName(), patient_id,doctor_id);
-            return new ApiResponse("Report sent successfully to " + patient.getEmail());
-        } catch (MessagingException e) {
-            throw new RuntimeException("Failed to send report email", e);
-        }
-    }
 }
