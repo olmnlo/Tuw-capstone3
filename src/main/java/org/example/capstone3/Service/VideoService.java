@@ -25,6 +25,8 @@ public class VideoService {
     private final PlanRepository planRepository;
     private final DoctorRepository doctorRepository;
     private final PatientRepository patientRepository;
+    private final VirusScanService virusScanService;
+
 
     public List<Video> get(){
         return videoRepository.findAll();
@@ -36,6 +38,16 @@ public class VideoService {
         if (plan == null){
             throw new ApiException("plan not found");
         }
+
+        try {
+            boolean clean = virusScanService.isFileClean(file.getBytes(), file.getOriginalFilename());
+            if (!clean) {
+                throw new ApiException("file not clean");
+            }
+        } catch (Exception e) {
+            throw new ApiException("error process file scan");
+        }
+
         Video video = new Video();
         video.setFileName(file.getOriginalFilename());
         video.setContentType(file.getContentType());
@@ -53,6 +65,14 @@ public class VideoService {
         Plan plan = planRepository.findPlanById(plan_id);
         if (plan == null){
             throw new ApiException("plan not found");
+        }
+        try {
+            boolean clean = virusScanService.isFileClean(file.getBytes(), file.getOriginalFilename());
+            if (!clean) {
+                throw new ApiException("file not clean");
+            }
+        } catch (Exception e) {
+            throw new ApiException("error process file scan");
         }
         Video video = new Video();
         video.setFileName(file.getOriginalFilename());

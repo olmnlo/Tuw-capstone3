@@ -77,4 +77,9 @@ public class ControllerAdvice {
     public ResponseEntity<ApiResponse> ConstraintViolationException (ConstraintViolationException constraintViolationException){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse(constraintViolationException.getMessage()));
     }
+
+    @ExceptionHandler(value = IllegalArgumentException.class)
+    public ResponseEntity<ApiResponse> IllegalArgumentException (IllegalArgumentException illegalArgumentException){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse(illegalArgumentException.getMessage()));
+    }
 }
