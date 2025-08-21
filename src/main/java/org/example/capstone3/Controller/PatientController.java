@@ -54,7 +54,7 @@ public class PatientController {
     }
 
     //Mohammed
-    @GetMapping("/{patient_id}/doctor/{doctor_id}/request-report")
+    @GetMapping("/{patient_id}/doctor/{doctor_id}/request-report.")
     public ResponseEntity<ApiResponse> sendPdfReportToPatient(
             @PathVariable Integer patient_id,
             @PathVariable Integer doctor_id) {
