@@ -1,5 +1,6 @@
 package org.example.capstone3.Controller;
 
+import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.example.capstone3.Api.ApiResponse;
 import org.example.capstone3.Model.Schedule;
@@ -69,7 +70,7 @@ public class BookingController {
     //Hussam: fix make it small letters and clear
     //ENDPOINT 5
     @PutMapping("/doctor/{doctor_id}/booking{booking_id}/status")
-    public ResponseEntity<?> updateBooking(@PathVariable Integer doctor_id, @PathVariable Integer booking_id, @RequestParam("status") String status) {
+    public ResponseEntity<?> updateBooking(@PathVariable Integer doctor_id, @PathVariable Integer booking_id, @RequestParam("status") String status) throws MessagingException {
         bookingService.updateBooking(doctor_id, booking_id, status);
         return ResponseEntity.ok().body(new ApiResponse("Booking has been updated"));
     }

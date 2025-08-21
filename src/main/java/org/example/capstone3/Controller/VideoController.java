@@ -57,7 +57,7 @@ public class VideoController {
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("video uploaded successfully"));
     }
 
-    @PostMapping("/upload/link/{plan_id}/patient/{patient_Id}")
+    @PostMapping("/upload/link/{plan_id}/doctor/{patient_Id}")
     public ResponseEntity<ApiResponse> uploadYoutubeLink(@PathVariable Integer patient_Id, @PathVariable Integer plan_id, @RequestParam("youtube-link") String youtubeLink ,@RequestParam("description")String description) {
         videoService.saveLinkDoctor(patient_Id, plan_id, youtubeLink, description);
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("video uploaded successfully"));
