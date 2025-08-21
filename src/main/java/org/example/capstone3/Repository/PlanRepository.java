@@ -19,4 +19,8 @@ public interface PlanRepository extends JpaRepository<Plan, Integer> {
 
     @Query("SELECT v FROM Plan p JOIN p.video v WHERE p.id = :id AND p.doctor.id = :doctorId")
     List<Video> findVideosByPlanIdAndDoctorId(@Param("id") Integer id, @Param("doctorId") Integer doctorId);
+
+    Plan findPlanByIdAndPatient_Id(Integer id, Integer patientId);
+
+    Plan findPlanByIdAndDoctor_Id(Integer id, Integer doctorId);
 }
