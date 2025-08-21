@@ -40,6 +40,9 @@ public class Patient {
     @Column(columnDefinition = "varchar(6) not null")
     private String sex;
 
+    //Mohammed add
+    private String email;
+
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "patient")
     private List<Booking> booking;
@@ -53,6 +56,9 @@ public class Patient {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "patient")
     private List<Answer> answers;
+
+
+
 
 
 

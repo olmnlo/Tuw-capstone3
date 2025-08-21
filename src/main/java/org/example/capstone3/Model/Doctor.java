@@ -44,6 +44,10 @@ public class Doctor {
     @Column(columnDefinition = "varchar(6) not null")
     private String sex;
 
+
+    //Mohammed Add
+    private String email;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "doctor")
     private Set<Schedule> schedule;
 

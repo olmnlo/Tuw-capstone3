@@ -36,4 +36,9 @@ public class PatientDTO {
     @Size(max = 6, message = "sex max length 6")
     @Pattern(regexp = "^(male|female)$", message = "sex must be either male or female")
     private String sex;
+
+
+    //Mohammed Add
+    @Email(message = "Email must be in valid form")
+    private String email;
 }
