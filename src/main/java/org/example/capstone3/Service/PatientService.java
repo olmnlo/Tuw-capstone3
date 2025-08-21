@@ -30,7 +30,7 @@ public class PatientService {
     //Hussam
     public void addPatient(PatientDTO patientDTO){
         //Mohammed add Email
-        Patient patient = new Patient(null, patientDTO.getName(),patientDTO.getUsername(),patientDTO.getPassword(), patientDTO.getAge(), patientDTO.getSex(), "alshmhani.x@gmail.com",new ArrayList<>(),null ,new ArrayList<>(), new ArrayList<>());
+        Patient patient = new Patient(null, patientDTO.getName(),patientDTO.getUsername(),patientDTO.getPassword(), patientDTO.getAge(), patientDTO.getSex(), patientDTO.getEmail(), new ArrayList<>(),null ,new ArrayList<>(), new ArrayList<>());
         patientRepository.save(patient);
     }
 

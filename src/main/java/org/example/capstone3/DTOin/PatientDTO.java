@@ -38,7 +38,10 @@ public class PatientDTO {
     private String sex;
 
 
-    //Mohammed Add
+    //Mohammed Add @Email
+    //Hussam fix add @NotEmpty, Size
+    @NotEmpty(message = "email is required")
+    @Size(max = 30, message = "max length for email is 30")
     @Email(message = "Email must be in valid form")
     private String email;
 }

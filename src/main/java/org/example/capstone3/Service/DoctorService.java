@@ -3,11 +3,13 @@ package org.example.capstone3.Service;
 import lombok.RequiredArgsConstructor;
 import org.example.capstone3.Api.ApiException;
 import org.example.capstone3.DTOin.DoctorDTO;
+import org.example.capstone3.DTOout.DoctorDTOout;
 import org.example.capstone3.Model.Doctor;
 import org.example.capstone3.Repository.DoctorRepository;
 import org.example.capstone3.Repository.PatientRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -55,6 +57,15 @@ public class DoctorService {
         }
 
         doctorRepository.delete(doctor);
+    }
+
+    public List<DoctorDTOout> searchDoctorByNameContains(String key){
+        List<DoctorDTOout> doctorDTOouts = new ArrayList<>();
+        List<Doctor> doctors = doctorRepository.findDoctorByNameContains(key);
+        for (Doctor doctor : doctors){
+            doctorDTOouts.add(new DoctorDTOout(doctor.getName(), doctor.getSex(),doctor.getSchedule()));
+        }
+        return doctorDTOouts;
     }
 
     // assign method for schedule (object inputs or variables) look at the model to know the parameters

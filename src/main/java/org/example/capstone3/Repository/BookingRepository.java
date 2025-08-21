@@ -1,6 +1,7 @@
 package org.example.capstone3.Repository;
 
 import org.example.capstone3.Model.Booking;
+import org.example.capstone3.Model.Schedule;
 import org.springframework.data.domain.Limit;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -26,4 +27,7 @@ public interface BookingRepository extends JpaRepository<Booking, Integer> {
 
     boolean existsByDoctor_IdAndAppointmentDate(Integer doctorId, LocalDateTime of);
 
+    boolean existsByDoctor_IdAndAppointmentDateAfter(Integer doctorId, LocalDateTime appointmentDateAfter);
+
+    boolean existsBySchedule(Schedule schedule);
 }

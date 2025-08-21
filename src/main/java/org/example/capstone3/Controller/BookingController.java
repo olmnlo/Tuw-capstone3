@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.capstone3.Api.ApiResponse;
 import org.example.capstone3.Model.Schedule;
 import org.example.capstone3.Service.BookingService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -84,5 +85,12 @@ public class BookingController {
                                                       @PathVariable String from, // yyyy-MM-dd (اختياري)
                                                       @PathVariable String to) {
         return ResponseEntity.ok().body(bookingService.getPatientBookingsSimple(patientId, status, on, from, to));
+    }
+
+    //Hussam
+    @PostMapping("/nearest/{patient_id}")
+    public ResponseEntity<ApiResponse> nearestBooking(@PathVariable Integer patient_id){
+        bookingService.takeFastestBooking(patient_id);
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Booking has been created"));
     }
 }
