@@ -54,7 +54,8 @@ public class PatientController {
     }
 
     //Mohammed
-    @GetMapping("/patient/{patient_id}/doctor/{doctor_id}")
+    //hussam fix : change the place from patient controller to report controller and make it post not get
+    @PostMapping("/{patient_id}/doctor/{doctor_id}")
     public ResponseEntity<ApiResponse> sendPdfReportToPatient(
             @PathVariable Integer patient_id,
             @PathVariable Integer doctor_id) {

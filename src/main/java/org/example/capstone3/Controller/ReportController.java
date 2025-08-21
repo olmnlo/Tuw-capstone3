@@ -91,6 +91,7 @@ public class ReportController {
         reportService.generateReport(patient_id, doctor_id);
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("report generated successfully"));
     }
+
     
 
 }

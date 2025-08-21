@@ -91,8 +91,6 @@ public class PatientService {
     }
 
     //Mohammed
-
-    //Mohammed
     public ApiResponse sendPdfReportToPatient(Integer patient_id, Integer doctor_id){
         Patient patient = patientRepository.findPatientById(patient_id);
         if (patient == null) {
