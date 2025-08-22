@@ -4,10 +4,10 @@ import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.example.capstone3.Api.ApiException;
 import org.example.capstone3.DTOin.DoctorDTO;
+import org.example.capstone3.DTOin.ScheduleDTO;
 import org.example.capstone3.DTOout.DoctorDTOout;
 import org.example.capstone3.Model.Doctor;
 import org.example.capstone3.Repository.DoctorRepository;
-import org.example.capstone3.Repository.PatientRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -87,11 +87,14 @@ public class DoctorService {
         return doctorDTOouts;
     }
 
-    // assign method for schedule (object inputs or variables) look at the model to know the parameters
+    // get all doctors based on slots
+    public List<DoctorDTOout> getAvailableDoctors(ScheduleDTO scheduleDTO) {
+        return doctorRepository.findBySchedule_DateAndSchedule_Time(
+                scheduleDTO.getDate(),
+                scheduleDTO.getTime()
+        );
+    }
 
-    // assign method for booking (object inputs or variables) look at the model to know the parameters
-
-    // assign method for report (object inputs or variables) look at the model to know the parameters
 
 
 
