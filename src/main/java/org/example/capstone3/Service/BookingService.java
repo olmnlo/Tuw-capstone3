@@ -238,6 +238,7 @@ public class BookingService {
                 .toList();
     }
 
+
 //    public void takeFastestBooking(Integer patient_id){
 //        Patient patient = patientRepository.findPatientById(patient_id);
 //        if (patient == null){
