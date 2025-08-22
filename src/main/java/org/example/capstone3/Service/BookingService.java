@@ -23,6 +23,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 //Mohammed
 @Service
@@ -282,6 +283,30 @@ public class BookingService {
         }
 
         throw new ApiException("No available schedule found for booking");
+    }
+
+    public Map<String , Integer> weeklyBookingNumbers(){
+        List<Booking> bookings = bookingRepository.findBookingByAppointmentDateBetween(LocalDate.now().minusDays(7).atStartOfDay(), LocalDate.now().plusDays(1).atStartOfDay());
+
+        return bookings.stream()
+                .collect(Collectors.toMap(
+                        b -> b.getDoctor().getId() + " - " + b.getDoctor().getName(), // unique key
+                        b -> 1,
+                        Integer::sum
+                ));
+    }
+
+    public Map<String, Integer> monthlyBookingNumbers() {
+        List<Booking> bookings = bookingRepository.findBookingByAppointmentDateBetween(
+                LocalDate.now().withDayOfMonth(1).atStartOfDay(),              // first day of this month
+                LocalDate.now().plusMonths(1).withDayOfMonth(1).atStartOfDay() // first day of next month
+        );
+        return bookings.stream()
+                .collect(Collectors.toMap(
+                        b -> b.getDoctor().getId() + " - " + b.getDoctor().getName(), // unique key
+                        b -> 1,
+                        Integer::sum
+                ));
     }
 
 
