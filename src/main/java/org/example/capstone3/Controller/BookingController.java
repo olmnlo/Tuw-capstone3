@@ -70,7 +70,7 @@ public class BookingController {
 
     //Hussam: fix make it small letters and clear
     //ENDPOINT 5
-    @PutMapping("/doctor/{doctor_id}/booking{booking_id}/status")
+    @PutMapping("/doctor/{doctor_id}/booking/{booking_id}/status")
     public ResponseEntity<?> updateBooking(@PathVariable Integer doctor_id, @PathVariable Integer booking_id, @RequestParam("status") String status) throws MessagingException {
         bookingService.updateBooking(doctor_id, booking_id, status);
         return ResponseEntity.ok().body(new ApiResponse("Booking has been updated"));
@@ -92,5 +92,14 @@ public class BookingController {
     public ResponseEntity<ApiResponse> nearestBooking(@PathVariable Integer patient_id){
         bookingService.takeFastestBooking(patient_id);
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Booking has been created"));
+    }
+
+    @GetMapping("/last-week")
+    public ResponseEntity<Map<String, Integer>> getLastWeekAnalysisBooking(){
+        return ResponseEntity.status(HttpStatus.OK).body(bookingService.weeklyBookingNumbers());
+    }
+    @GetMapping("/last-month")
+    public ResponseEntity<Map<String, Integer>> getLastMonthAnalysisBooking(){
+        return ResponseEntity.status(HttpStatus.OK).body(bookingService.monthlyBookingNumbers());
     }
 }

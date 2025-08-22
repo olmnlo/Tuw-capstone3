@@ -30,4 +30,6 @@ public interface BookingRepository extends JpaRepository<Booking, Integer> {
     boolean existsByDoctor_IdAndAppointmentDateAfter(Integer doctorId, LocalDateTime appointmentDateAfter);
 
     boolean existsBySchedule(Schedule schedule);
+
+    List<Booking> findBookingByAppointmentDateBetween(LocalDateTime appointmentDateAfter, LocalDateTime appointmentDateBefore);
 }
